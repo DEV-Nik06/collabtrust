@@ -51,7 +51,7 @@
 ## Checklist
 
 * [ ] Code follows project conventions
-* [ ] Tests pass
+* [ ] Tests pass (N/A for documentation-only changes)
 * [ ] No secrets committed
 * [ ] Documentation updated if required
 * [ ] Changes are scoped to this PR

@@ -1,7 +1,7 @@
 # CollabTrust — Monitoring & Operational Logging
 
 > **Status:** Draft (Proposed)  
-> **Phase:** Phase G — Deployment and Operations  
+> **Phase:** Phase 7 — Testing & Deployment  
 > **Depends on:** [`system-architecture.md`](../03-architecture/system-architecture.md), [`deployment-guide.md`](./deployment-guide.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -9,7 +9,9 @@
 
 ## 1. Overview & Monitoring Strategy
 
-CollabTrust implements lightweight, structured logging and health checking designed for high visibility during MVP validation without requiring costly enterprise observability infrastructure.
+> **Status:** Blueprint — nothing is implemented or provisioned yet. Tooling choices marked "Proposed" below are pending selection (no ADR yet).
+
+CollabTrust is designed around lightweight, structured logging and health checking intended to provide high visibility during MVP validation without requiring costly enterprise observability infrastructure.
 
 ### Primary Objectives
 1. **Application Availability:** Detect API downtime or container crashes instantly.
@@ -21,7 +23,7 @@ CollabTrust implements lightweight, structured logging and health checking desig
 
 ## 2. Structured Logging Standards
 
-Backend logs use structured JSON format (via **Pino** or **Winston**):
+Backend logs use structured JSON format (via **Pino** or **Winston** — logging library selection is proposed, pending selection; no ADR yet):
 
 ```json
 {
@@ -63,7 +65,7 @@ Backend logs use structured JSON format (via **Pino** or **Winston**):
     "timestamp": "2026-10-12T10:15:30Z",
     "uptimeSeconds": 14502,
     "database": "connected",
-    "version": "0.1.0-mvp"
+    "version": "<package.json version>"
   }
   ```
 * **Failure Response (503 Service Unavailable):** Returns if database connection pool is unhealthy.
@@ -72,9 +74,11 @@ Backend logs use structured JSON format (via **Pino** or **Winston**):
 
 ## 4. Operational Alerting
 
-For the MVP deployment:
-* **Uptime Monitoring:** External free ping monitor (e.g., UptimeRobot or BetterStack) polling `/api/v1/health` every 5 minutes with email alert notifications.
-* **Crash Alerts:** PaaS platform (Railway/Render) automated email notification upon unexpected container exit or restart loop.
+> **Status:** Proposed — pending selection (no ADR yet). The vendors and polling cadence below are illustrative examples, not decisions.
+
+For the planned MVP deployment:
+* **Uptime Monitoring (proposed):** An external uptime monitor (e.g., UptimeRobot or BetterStack — vendor pending selection) polling `/api/v1/health` approximately every 5 minutes (cadence pending selection) with email alert notifications.
+* **Crash Alerts (proposed):** PaaS platform (Railway/Render) automated email notification upon unexpected container exit or restart loop.
 
 ---
 

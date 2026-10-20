@@ -1,7 +1,7 @@
 # CollabTrust — User Stories
 
 > **Status:** Draft  
-> **Phase:** Phase B — Engineering Requirements  
+> **Phase:** Phase 3 — Requirements  
 > **Depends on:** [`personas.md`](../01-product/personas.md), [`user-journeys.md`](../01-product/user-journeys.md), [`feature-requirements.md`](../01-product/feature-requirements.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -62,7 +62,7 @@ This document presents 50 user stories (`US-001` through `US-050`) capturing the
 
 | ID | User Story | Priority | Trace |
 |---|---|:---:|---|
-| **US-021** | **As an** emerging creator (Maya),<br>**I want to** register an account with creator role,<br>**so that** I can access brand collaboration opportunities. | **MUST-HAVE** | FEAT-001<br>FR-001 |
+| **US-021** | **As an** emerging creator (Maya),<br>**I want to** register an account with creator role,<br>**so that** I can access brand collaboration opportunities. | **MUST-HAVE** | FEAT-001<br>FR-001<br>AC-001.1 |
 | **US-022** | **As an** emerging creator (Maya),<br>**I want to** set up my creator profile with niche, connected channels, audience estimate, and content style,<br>**so that** relevant brands can find and match with me. | **MUST-HAVE** | FEAT-004<br>FR-013 |
 | **US-023** | **As a** mid-tier creator (Jordan),<br>**I want to** update my profile and collaboration preferences as my content evolves,<br>**so that** brands only approach me with opportunities matching my current focus. | **MUST-HAVE** | FEAT-004<br>FR-014 |
 | **US-024** | **As an** emerging creator (Maya),<br>**I want to** see a profile completeness indicator with tips on missing information,<br>**so that** I can optimize my profile to receive better match recommendations. | **SHOULD-HAVE** | FEAT-004<br>FR-015 |
@@ -79,17 +79,17 @@ This document presents 50 user stories (`US-001` through `US-050`) capturing the
 | **US-030** | **As a** mid-tier creator (Jordan),<br>**I want to** inspect brand trust indicators (account age, profile completeness, completed collaborations),<br>**so that** I don't waste time working with unverified or unreliable sponsors. | **SHOULD-HAVE** | FEAT-031<br>FR-054 |
 | **US-031** | **As an** emerging creator (Maya),<br>**I want to** submit an application with an optional pitch note to an active campaign,<br>**so that** I can express my enthusiasm and specific content ideas. | **MUST-HAVE** | FEAT-040<br>FR-060 |
 | **US-032** | **As an** emerging creator (Maya),<br>**I want** the system to prevent accidental duplicate applications to the same campaign,<br>**so that** my submission history remains clean and professional. | **MUST-HAVE** | FEAT-040<br>FR-061 |
-| **US-033** | **As an** emerging creator (Maya),<br>**I want to** view the status of my submitted applications (Pending, Accepted, Declined),<br>**so that** I know where each opportunity stands. | **MUST-HAVE** | FEAT-051<br>FR-071 |
+| **US-033** | **As an** emerging creator (Maya),<br>**I want to** view the status of my submitted applications (Pending, Accepted, Declined),<br>**so that** I know where each opportunity stands. | **MUST-HAVE** | FEAT-051<br>FR-071<br>AC-051.1 |
 
 ### Collaboration Delivery
 
 | ID | User Story | Priority | Trace |
 |---|---|:---:|---|
-| **US-034** | **As a** mid-tier creator (Jordan),<br>**I want to** receive notification and see a collaboration created when a brand accepts my application,<br>**so that** I know our partnership is confirmed and work can begin. | **MUST-HAVE** | FEAT-041<br>FR-064 |
-| **US-035** | **As an** emerging creator (Maya),<br>**I want to** view collaboration milestone states and due dates,<br>**so that** I stay on schedule and fulfill all contracted deliverables. | **MUST-HAVE** | FEAT-042<br>FR-065 |
-| **US-036** | **As a** mid-tier creator (Jordan),<br>**I want to** communicate directly with the brand point-of-contact within the collaboration thread,<br>**so that** requirements questions and draft reviews are documented in one place. | **SHOULD-HAVE** | FEAT-043<br>FR-066 |
-| **US-037** | **As an** emerging creator (Maya),<br>**I want to** submit links to my published content deliverables for brand review,<br>**so that** the brand can verify completion. | **MUST-HAVE** | FEAT-044<br>FR-067 |
-| **US-038** | **As a** mid-tier creator (Jordan),<br>**I want** completed collaborations logged in my collaboration history,<br>**so that** my track record on the platform grows over time. | **MUST-HAVE** | FEAT-044<br>FR-068 |
+| **US-034** | **As a** mid-tier creator (Jordan),<br>**I want to** receive notification and see a collaboration created when a brand accepts my application,<br>**so that** I know our partnership is confirmed and work can begin. | **MUST-HAVE** | FEAT-041<br>FR-064<br>AC-041.4 |
+| **US-035** | **As an** emerging creator (Maya),<br>**I want to** view collaboration milestone states and due dates,<br>**so that** I stay on schedule and fulfill all contracted deliverables. | **MUST-HAVE** | FEAT-042<br>FR-065<br>AC-042.1 |
+| **US-036** | **As a** mid-tier creator (Jordan),<br>**I want to** communicate directly with the brand point-of-contact within the collaboration thread,<br>**so that** requirements questions and draft reviews are documented in one place. | **SHOULD-HAVE** | FEAT-043<br>FR-066<br>AC-043.1 |
+| **US-037** | **As an** emerging creator (Maya),<br>**I want to** submit links to my published content deliverables for brand review,<br>**so that** the brand can verify completion. | **MUST-HAVE** | FEAT-044<br>FR-067<br>AC-044.2 |
+| **US-038** | **As a** mid-tier creator (Jordan),<br>**I want** completed collaborations logged in my collaboration history,<br>**so that** my track record on the platform grows over time. | **MUST-HAVE** | FEAT-044<br>FR-068<br>AC-044.1 |
 
 ---
 
@@ -104,11 +104,11 @@ This document presents 50 user stories (`US-001` through `US-050`) capturing the
 | **US-041** | **As a** registered user (any),<br>**I want to** log out from the application navigation,<br>**so that** my session is terminated securely on shared computers. | **MUST-HAVE** | FEAT-002<br>FR-005 |
 | **US-042** | **As a** registered user (any),<br>**I want to** request a secure password reset link sent to my email,<br>**so that** I can regain access if I forget my password. | **SHOULD-HAVE** | FEAT-005<br>FR-007 |
 | **US-043** | **As a** registered user (any),<br>**I want** the system to enforce role-based access control,<br>**so that** brand-specific management pages are inaccessible to creators and vice-versa. | **MUST-HAVE** | FEAT-002<br>FR-006 |
-| **US-044** | **As a** brand user,<br>**I want** a dedicated Brand Dashboard displaying active campaigns, incoming applications, and collaborations,<br>**so that** I have an immediate high-level view of my workload. | **MUST-HAVE** | FEAT-050<br>FR-070 |
-| **US-045** | **As a** creator user,<br>**I want** a dedicated Creator Dashboard displaying matched opportunities, pending applications, and active collaborations,<br>**so that** I can manage my partnership pipeline at a glance. | **MUST-HAVE** | FEAT-051<br>FR-071 |
+| **US-044** | **As a** brand user,<br>**I want** a dedicated Brand Dashboard displaying active campaigns, incoming applications, and collaborations,<br>**so that** I have an immediate high-level view of my workload. | **SHOULD-HAVE** | FEAT-050<br>FR-070 |
+| **US-045** | **As a** creator user,<br>**I want** a dedicated Creator Dashboard displaying matched opportunities, pending applications, and active collaborations,<br>**so that** I can manage my partnership pipeline at a glance. | **SHOULD-HAVE** | FEAT-051<br>FR-071 |
 | **US-046** | **As a** user (any),<br>**I want** role-aware navigation that only shows menus relevant to my account type,<br>**so that** my interface is clean and uncluttered. | **MUST-HAVE** | FEAT-052<br>FR-072 |
 | **US-047** | **As a** brand manager (Daniel),<br>**I want** the system to never send automated outreach messages or invitations to creators on my behalf,<br>**so that** our brand maintains complete control over communications. | **MUST-HAVE** | FEAT-020<br>FR-048 |
-| **US-048** | **As a** user (any),<br>**I want** all sensitive data transmitted over encrypted TLS connections,<br>**so that** my credentials and business details are protected in transit. | **MUST-HAVE** | FEAT-002<br>NFR-014 |
+| **US-048** | **As a** user (any),<br>**I want** all sensitive data transmitted over encrypted TLS connections,<br>**so that** my credentials and business details are protected in transit. | **MUST-HAVE** | FEAT-002<br>NFR-013 |
 | **US-049** | **As a** user (any),<br>**I want** responsive interfaces that function cleanly on mobile and desktop viewports,<br>**so that** I can check campaign updates from any device. | **MUST-HAVE** | FEAT-052<br>NFR-030 |
 | **US-050** | **As a** user (any),<br>**I want** helpful empty states with guidance when viewing empty dashboards or search lists,<br>**so that** I understand what step to take next. | **SHOULD-HAVE** | FEAT-050<br>FR-076 |
 
@@ -120,7 +120,7 @@ All 50 user stories map directly to personas and technical specifications:
 * **Brand Stories:** `US-001` – `US-020` (Priya Sharma & Daniel Okafor)
 * **Creator Stories:** `US-021` – `US-038` (Maya Torres & Jordan Ellis)
 * **Cross-Cutting Stories:** `US-039` – `US-050` (Platform Security & Usability)
-* Every story links to functional requirements in [`functional-requirements.md`](./functional-requirements.md) and criteria in [`acceptance-criteria.md`](./acceptance-criteria.md).
+* Every story links to functional requirements in [`functional-requirements.md`](./functional-requirements.md) and to testable criteria — either acceptance criteria in [`acceptance-criteria.md`](./acceptance-criteria.md) or non-functional requirements in [`non-functional-requirements.md`](./non-functional-requirements.md).
 
 ---
 

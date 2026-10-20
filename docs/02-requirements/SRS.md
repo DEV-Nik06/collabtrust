@@ -1,7 +1,7 @@
 # CollabTrust — Software Requirements Specification (SRS)
 
 > **Status:** Draft  
-> **Phase:** Phase B — Engineering Requirements  
+> **Phase:** Phase 3 — Requirements  
 > **Depends on:** [`PRD.md`](../01-product/PRD.md), [`feature-requirements.md`](../01-product/feature-requirements.md), [`mvp-scope.md`](../01-product/mvp-scope.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -76,11 +76,11 @@ CollabTrust operates as a two-sided marketplace architecture supported by an asy
    * Emerging and micro content creators looking for legitimate brand partnerships.
    * Requires proactive campaign discovery and clear brief requirements.
    * Relies on brand legitimacy signals to avoid scams and non-payment.
-3. **Platform Administrator:**
-   * Internal maintenance user overseeing marketplace health and safety (basic view for MVP).
+
+> An administrative user class is **explicitly out of MVP scope** (see [`mvp-scope.md`](../01-product/mvp-scope.md)); introducing one later requires new requirements, schema, and access-control changes.
 
 ### 2.3 Operating Environment
-* **Server Runtime:** Node.js 18+ LTS on Linux container.
+* **Server Runtime:** Node.js 20+ LTS (20.x or 22.x) on Linux container.
 * **Database Engine:** PostgreSQL 15+.
 * **Client Environment:** Modern evergreen browsers (Chrome, Firefox, Safari, Edge) on desktop and mobile viewports.
 * **External AI Engine:** Hosted LLM REST API (e.g., Anthropic Claude, OpenAI, or Google Gemini API).
@@ -93,11 +93,11 @@ CollabTrust operates as a two-sided marketplace architecture supported by an asy
 The system specifies **62 Functional Requirements** detailed in [`functional-requirements.md`](./functional-requirements.md):
 * **Authentication & User Management:** `FR-001` – `FR-008` (6 MUST-HAVE, 2 SHOULD-HAVE)
 * **Profile Management:** `FR-010` – `FR-018` (7 MUST-HAVE, 2 SHOULD-HAVE)
-* **Campaign Lifecycle & Structuring:** `FR-020` – `FR-032` (9 MUST-HAVE, 4 SHOULD-HAVE)
+* **Campaign Lifecycle & Structuring:** `FR-020` – `FR-032` (11 MUST-HAVE, 2 SHOULD-HAVE)
 * **Creator Discovery & Matching:** `FR-040` – `FR-048` (6 MUST-HAVE, 3 SHOULD-HAVE)
 * **Trust Analysis & Signal Governance:** `FR-050` – `FR-056` (5 MUST-HAVE, 2 SHOULD-HAVE)
-* **Collaboration Workflow:** `FR-060` – `FR-068` (7 MUST-HAVE, 2 SHOULD-HAVE)
-* **Dashboard & Navigation:** `FR-070` – `FR-076` (4 MUST-HAVE, 3 SHOULD-HAVE)
+* **Collaboration Workflow:** `FR-060` – `FR-068` (8 MUST-HAVE, 1 SHOULD-HAVE)
+* **Dashboard & Navigation:** `FR-070` – `FR-076` (2 MUST-HAVE, 5 SHOULD-HAVE)
 
 ### 3.2 Non-Functional Requirements Summary
 The system specifies **52 Non-Functional Requirements** detailed in [`non-functional-requirements.md`](./non-functional-requirements.md):

@@ -25,7 +25,7 @@ This directory contains the comprehensive product, technical, AI, design, testin
 * [`functional-requirements.md`](./02-requirements/functional-requirements.md) — 62 functional requirements (`FR-001`–`FR-076`).
 * [`non-functional-requirements.md`](./02-requirements/non-functional-requirements.md) — 52 quality attributes (`NFR-001`–`NFR-077`).
 * [`user-stories.md`](./02-requirements/user-stories.md) — 50 user stories (`US-001`–`US-050`).
-* [`acceptance-criteria.md`](./02-requirements/acceptance-criteria.md) — 80 acceptance criteria (`AC-001.1`–`AC-052.2`).
+* [`acceptance-criteria.md`](./02-requirements/acceptance-criteria.md) - 65 canonical acceptance criteria (`AC-001.1`-`AC-052.2`), the single source of truth for ACs.
 
 ### [03 — Architecture](./03-architecture/)
 * [`system-architecture.md`](./03-architecture/system-architecture.md) — Monolithic layered system architecture.

@@ -1,7 +1,7 @@
 # CollabTrust — Design System
 
 > **Status:** Draft (Proposed)  
-> **Phase:** Phase E — Design  
+> **Phase:** Phase 6 — Design  
 > **Depends on:** [`ux-flows.md`](./ux-flows.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -68,23 +68,26 @@ Font family: **Inter** or standard system sans-serif (`font-sans`).
 * Text fields & Textareas: `block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500`
 
 ### 4.4 Trust Signal Card Component
-* **Informational Signal:**
+
+> All audience and engagement figures in trust signals are based on **creator self-reported profile data** — the MVP has no live platform analytics integration. Every trust signal card must be accompanied by the Mandatory Trust Disclaimer Banner (§4.5), reproduced verbatim: *"Informational observations only. CollabTrust surfaces signals and evidence, not fraud guarantees or definitive authenticity verdicts."*
+
+* **Informational Signal (sample):**
   ```html
   <div class="flex items-start gap-3 p-3 bg-slate-50 border border-slate-200 rounded-lg">
     <span class="inline-block w-2 h-2 mt-1.5 rounded-full bg-slate-400"></span>
     <div>
       <p class="text-xs font-semibold text-slate-800">Engagement Consistency</p>
-      <p class="text-xs text-slate-600">Consistent comment-to-like ratio across recent posts.</p>
+      <p class="text-xs text-slate-600">Self-reported engagement figures are consistent across recent posts. (Sample content — based on creator self-reported data, not platform analytics.)</p>
     </div>
   </div>
   ```
-* **Anomaly Flag:**
+* **Anomaly Flag (sample):**
   ```html
   <div class="flex items-start gap-3 p-3 bg-amber-50 border border-amber-200 rounded-lg">
     <span class="inline-block w-2 h-2 mt-1.5 rounded-full bg-amber-500"></span>
     <div>
-      <p class="text-xs font-semibold text-amber-900">Follower Growth Anomaly</p>
-      <p class="text-xs text-amber-700">Follower increase spike detected (+150% in 48 hours).</p>
+      <p class="text-xs font-semibold text-amber-900">Self-Reported Audience Figure</p>
+      <p class="text-xs text-amber-700">Creator self-reported followers: 12,400 (updated 2026-10-01) — self-reported, not platform-verified. (Sample content for illustration.)</p>
     </div>
   </div>
   ```

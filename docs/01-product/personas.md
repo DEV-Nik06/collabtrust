@@ -27,11 +27,11 @@ This document defines representative user personas for CollabTrust. Each persona
 
 | Persona | Side | Segment | MVP Relevance |
 |---|---|---|---|
-| [Priya Sharma](#31-priya-sharma--small-brand-founder) | Brand | Small brand | **Primary MVP user** |
-| [Daniel Okafor](#32-daniel-okafor--growing-brand-marketing-manager) | Brand | Growing brand | **Primary MVP user** |
-| [Lisa Chen](#33-lisa-chen--mid-size-brand-marketer) | Brand | Mid-size brand | Secondary / future user |
-| [Maya Torres](#34-maya-torres--emerging-micro-creator) | Creator | Emerging / micro creator | **Primary MVP user** |
-| [Jordan Ellis](#35-jordan-ellis--mid-tier-creator) | Creator | Mid-tier creator | Secondary MVP user |
+| [Priya Sharma](#31-priya-sharma---small-brand-founder) | Brand | Small brand | **Primary MVP user** |
+| [Daniel Okafor](#32-daniel-okafor---growing-brand-marketing-manager) | Brand | Growing brand | **Primary MVP user** |
+| [Lisa Chen](#33-lisa-chen---mid-size-brand-marketer) | Brand | Mid-size brand | Secondary / future user |
+| [Maya Torres](#34-maya-torres---emerging--micro-creator) | Creator | Emerging / micro creator | **Primary MVP user** |
+| [Jordan Ellis](#35-jordan-ellis---mid-tier-creator) | Creator | Mid-tier creator | Secondary MVP user |
 
 ---
 
@@ -121,7 +121,7 @@ Daniel manages a small marketing team at a growing fitness apparel company. The 
 - Personally handles most creator communication via email and DMs
 - Spends a disproportionate amount of his time on logistics rather than strategy
 
-#### What She Needs from CollabTrust
+#### What He Needs from CollabTrust
 
 - A structured marketplace where he can post campaigns and receive AI-assisted creator matches with explanations
 - **Creator Matching Agent** that considers campaign requirements, content alignment, and audience relevance — with reasoning

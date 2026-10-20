@@ -136,4 +136,4 @@ The following AI agents are planned for the platform. Each agent has a defined u
 | [`docs/01-product/problem-definition.md`](./problem-definition.md) | Detailed problem definition (Phase 2.2) |
 | [`docs/README.md`](../README.md) | Documentation directory index |
 | [`CONTRIBUTING.md`](../../CONTRIBUTING.md) | Branch, commit, and PR conventions |
-| [`AGENTS.md`](../../AGENTS.md) | Rules for AI agents working on this repository |
+| [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md) | Repository source of truth and rules for working on this repository |

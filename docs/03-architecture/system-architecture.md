@@ -1,7 +1,7 @@
 # CollabTrust — System Architecture
 
 > **Status:** Draft (Proposed)
-> **Phase:** Phase C — Architecture
+> **Phase:** Phase 4 — Architecture
 > **Depends on:** [`PRD.md`](../01-product/PRD.md), [`mvp-scope.md`](../01-product/mvp-scope.md), [`feature-requirements.md`](../01-product/feature-requirements.md)
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)
 

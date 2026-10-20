@@ -1,7 +1,7 @@
 # CollabTrust — Acceptance Criteria Matrix
 
 > **Status:** Draft  
-> **Phase:** Phase B — Engineering Requirements  
+> **Phase:** Phase 3 — Requirements  
 > **Depends on:** [`feature-requirements.md`](../01-product/feature-requirements.md), [`functional-requirements.md`](./functional-requirements.md), [`user-stories.md`](./user-stories.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -9,7 +9,10 @@
 
 ## 1. Overview & Methodology
 
-This document consolidates the complete index of **80 canonical Acceptance Criteria** across all functional areas of the CollabTrust platform. Each criterion represents a testable, unambiguous condition of satisfaction mapped directly to its Feature ID (`FEAT-XXX`), Functional Requirement (`FR-XXX`), User Story (`US-XXX`), and verified test method.
+This document consolidates the complete index of **65 canonical Acceptance Criteria** across all functional areas of the CollabTrust platform. Each criterion represents a testable, unambiguous condition of satisfaction mapped directly to its Feature ID (`FEAT-XXX`), Functional Requirement (`FR-XXX`), User Story (`US-XXX`), and verified test method.
+
+> [!IMPORTANT]
+> **Single source of truth:** This file is the *only* authoritative list of acceptance criteria. [`feature-requirements.md`](../01-product/feature-requirements.md) links here and defines no criteria of its own. Any AC not listed in this table does not exist.
 
 ### Test Method Categories
 * **Unit:** Automated unit tests covering isolated functions, models, and utility handlers.
@@ -49,6 +52,7 @@ This document consolidates the complete index of **80 canonical Acceptance Crite
 | **AC-003.1** | Given a new brand user, when profile form with company name, category, and budget is submitted, then a BrandProfile record is persisted. | FEAT-003<br>FR-010<br>US-002 | Integration | PostgreSQL test container |
 | **AC-003.2** | Given an existing brand profile, when updated fields are submitted by the owner, then the record is updated and updatedAt timestamp refreshed. | FEAT-003<br>FR-011<br>US-003 | Integration | PostgreSQL test container |
 | **AC-003.3** | Given an authenticated creator, when viewing a brand's public profile, then company details and completed collaboration counts are rendered. | FEAT-003<br>FR-012<br>US-029 | Integration / E2E | Browser + API server |
+| **AC-003.4** | Given a brand or creator profile, when it is created or updated, then accurate `createdAt` and `updatedAt` timestamps are persisted with the record. | FEAT-003<br>FR-017 | Integration | PostgreSQL test container |
 | **AC-004.1** | Given a new creator user, when submitting display name, niche, connected platforms, and estimated audience, then CreatorProfile is created. | FEAT-004<br>FR-013<br>US-022 | Integration | PostgreSQL test container |
 | **AC-004.2** | Given an existing creator profile, when updated attributes are submitted by the owner, then the record is persisted. | FEAT-004<br>FR-014<br>US-023 | Integration | PostgreSQL test container |
 | **AC-004.3** | Given an authenticated brand user, when viewing a creator profile, then niche, platforms, self-reported metrics, and bio are visible. | FEAT-004<br>FR-016<br>US-013 | Integration / E2E | Browser + API server |
@@ -61,15 +65,18 @@ This document consolidates the complete index of **80 canonical Acceptance Crite
 | AC ID | Specification ("Given / When / Then") | Traceability | Test Method | Environment Dependencies |
 |---|---|---|:---:|---|
 | **AC-010.1** | Given an authenticated brand user, when free-text campaign idea is entered, then the input is accepted and a loading indicator displayed. | FEAT-010<br>FR-020<br>US-004 | E2E | Browser |
-| **AC-010.2** | Given raw campaign text, when submitted to the Campaign Brief Agent, then structured JSON is returned containing title, goals, target audience, deliverables, and budget. | FEAT-011<br>FR-021<br>US-005 | AI Evaluation | Mock/Live LLM adapter |
-| **AC-010.3** | Given LLM timeout or structured parse error, when brief agent fails, then the system falls back to a clean manual input form with error notice. | FEAT-011<br>FR-023<br>US-006 | Integration / E2E | Error injection fixture |
+| **AC-010.2** | Given structured brief JSON returned by the Campaign Brief Agent, when received, then an editable draft form is pre-populated with every returned field and no field is silently dropped. | FEAT-011<br>FR-022<br>US-005 | Integration / E2E | Mock LLM adapter |
 | **AC-011.1** | Given a generated campaign brief, when presented to the brand, then all fields are editable in the UI before saving or publishing. | FEAT-012<br>FR-024<br>US-007 | E2E | Browser |
+| **AC-011.2** | Given raw campaign text, when submitted to the Campaign Brief Agent, then structured JSON is returned containing title, goals, target audience, deliverables, and budget. | FEAT-011<br>FR-021<br>US-005 | AI Evaluation | Mock/Live LLM adapter |
+| **AC-011.3** | Given LLM timeout or structured parse error, when brief agent fails, then the system falls back to a clean manual input form with error notice. | FEAT-011<br>FR-023<br>US-006 | Integration / E2E | Error injection fixture |
 | **AC-012.1** | Given an edited brief draft, when saved, then a Campaign record with status `draft` is persisted. | FEAT-012<br>FR-025<br>US-007 | Integration | PostgreSQL test container |
 | **AC-013.1** | Given a draft campaign, when the brand clicks Publish, then the status transitions to `active` and Creator Matching Agent is triggered. | FEAT-013<br>FR-026<br>US-008 | Integration / E2E | PostgreSQL test container |
 | **AC-013.2** | Given a campaign publication request, when user is not the owning brand, then 403 Forbidden is returned. | FEAT-013<br>FR-026<br>US-008 | Integration | None |
+| **AC-013.3** | Given a campaign transitions from `draft` to `active`, when publication completes, then exactly one Creator Matching Agent run is triggered for that publication. | FEAT-013<br>FR-027<br>US-008 | Integration | LLM call-count spy fixture |
 | **AC-014.1** | Given published active campaigns, when a creator browses the marketplace feed, then all active campaigns are displayed with title, brand, category, and budget. | FEAT-014<br>FR-028<br>US-025 | Integration / E2E | Seed DB fixtures |
 | **AC-015.1** | Given an active campaign, when a creator selects it, then the full brief detail page is rendered including requirements and deliverables. | FEAT-015<br>FR-029<br>US-027 | Integration / E2E | Browser |
 | **AC-016.1** | Given an active campaign, when the owning brand marks it closed, then status changes to `closed` and creator applications are disabled. | FEAT-016<br>FR-030<br>US-020 | Integration | PostgreSQL test container |
+| **AC-016.2** | Given a campaign with status other than `active`, when a creator attempts to submit an application, then the request is rejected with 400 Bad Request and no Application record is created. | FEAT-016<br>FR-031<br>US-031 | Integration | PostgreSQL test container |
 | **AC-017.1** | Given multiple active campaigns, when a creator filters by category or budget range, then only matching campaigns are rendered in the feed. | FEAT-017<br>FR-032<br>US-026 | Unit / E2E | Browser |
 
 ---
@@ -82,6 +89,8 @@ This document consolidates the complete index of **80 canonical Acceptance Crite
 | **AC-020.2** | Given a match record, when rendered in the brand console, then an explicit human-readable explanation string detailing fit factors is visible. | FEAT-021<br>FR-041<br>US-010 | Unit / E2E | Browser |
 | **AC-020.3** | Given a campaign with zero matching creator profiles, when matching completes, then a clean "No matching creators found" message is displayed without errors. | FEAT-020<br>FR-043<br>US-011 | Integration / E2E | Empty DB test |
 | **AC-020.4** | Given match completion, when inspected, then zero automated emails or invitations were dispatched to matched creators. | FEAT-020<br>FR-048<br>US-047 | Integration | Mailer spy fixture |
+| **AC-020.5** | Given a campaign-creator match has already been generated and campaign criteria have not changed, when the matching agent is triggered again, then the existing Match record is returned without invoking the LLM API a second time. | FEAT-020<br>FR-047 | Integration | LLM call-count spy fixture |
+| **AC-020.6** | Given computed matches for a campaign, when the owning brand opens the match console, then candidates are ranked by relevance score with each explanation rendered; a non-owning user receives 403 Forbidden. | FEAT-020<br>FR-042<br>US-010 | Integration / E2E | Seed DB fixtures |
 | **AC-021.1** | Given a creator viewing a campaign, when a pre-computed match exists for that creator, then a personalized fit indicator is displayed. | FEAT-021<br>FR-044<br>US-028 | Integration / E2E | Browser |
 | **AC-022.1** | Given an authenticated brand, when searching creators manually, then profiles filtered by niche and platform are returned. | FEAT-022<br>FR-045<br>US-015 | Integration | Seed DB fixtures |
 | **AC-023.1** | Given a creator profile, when Profile Insight Agent is invoked, then a concise audience and content alignment summary is rendered. | FEAT-023<br>FR-046<br>US-012 | AI Evaluation / Int | Mock LLM adapter |
@@ -95,6 +104,8 @@ This document consolidates the complete index of **80 canonical Acceptance Crite
 | **AC-030.1** | Given a creator profile, when Trust Analysis Agent runs, then observational signals for completeness, metric consistency, and anomaly notes are returned. | FEAT-030<br>FR-050<br>US-013 | AI Evaluation / Int | Mock LLM adapter |
 | **AC-030.2** | Given generated trust output, when evaluated, then zero instances of words claiming definitive fraud detection ("fake", "guaranteed fraud", "authentic certified") are present. | FEAT-030<br>FR-051<br>US-013 | AI Evaluation / Unit | Rule-based linter |
 | **AC-030.3** | Given any screen displaying trust signals, when rendered, then a persistent disclaimer stating signals are informational and do not guarantee authenticity is visible. | FEAT-032<br>FR-052<br>US-014 | E2E / Manual UX | Browser |
+| **AC-030.4** | Given a trust signal card is displayed, when the user expands or clicks the signal, then the underlying data point(s) (e.g., profile field completeness score, audience metric value) that generated the signal are rendered. | FEAT-030<br>FR-055 | Integration / E2E | Browser |
+| **AC-030.5** | Given generated trust signals, when rendered, then each signal carries exactly one neutral observational category consistent with the documented `signalType` enum. | FEAT-030<br>FR-053<br>US-013 | Unit / Integration | Rule-based linter |
 | **AC-031.1** | Given a brand profile, when viewed by a creator, then objective brand trust indicators (account age, profile completeness, completed collaborations) are rendered. | FEAT-031<br>FR-054<br>US-030 | Integration / E2E | Browser |
 | **AC-032.1** | Given an unauthenticated or non-owning user, when attempting to fetch detailed creator trust analysis reports directly via API, then access is denied. | FEAT-030<br>FR-056<br>US-043 | Integration | API server |
 
@@ -109,9 +120,11 @@ This document consolidates the complete index of **80 canonical Acceptance Crite
 | **AC-041.1** | Given submitted applications, when the brand opens campaign management, then all applications are listed with creator profiles and match explanations. | FEAT-041<br>FR-062<br>US-016 | Integration / E2E | Seed DB fixtures |
 | **AC-041.2** | Given an application, when the brand clicks Accept, then application status becomes `accepted` and a Collaboration record is initialized. | FEAT-041<br>FR-063<br>US-017 | Integration | PostgreSQL test container |
 | **AC-041.3** | Given an application, when the brand clicks Decline, then application status becomes `declined` and no collaboration record is created. | FEAT-041<br>FR-063<br>US-017 | Integration | PostgreSQL test container |
+| **AC-041.4** | Given a brand accepts an application, when the Collaboration record is created, then its initial status is `invited`; upon the creator's explicit acknowledgement it transitions to `accepted`; no path reaches `in_progress` without that acknowledgement. | FEAT-041<br>FR-064<br>US-017 | Integration | PostgreSQL test container |
 | **AC-042.1** | Given an active collaboration, when participants view the collaboration page, then the current lifecycle state (`invited`, `accepted`, `in_progress`, `completed`) is visible. | FEAT-042<br>FR-065<br>US-018 | Integration / E2E | Browser |
 | **AC-043.1** | Given an active collaboration, when a participant submits a message, then the Message record is stored and rendered chronologically in the thread. | FEAT-043<br>FR-066<br>US-019 | Integration / E2E | PostgreSQL test container |
 | **AC-044.1** | Given completed deliverables, when submitted and confirmed by the brand, then collaboration status transitions to `completed` and is archived. | FEAT-044<br>FR-068<br>US-020 | Integration / E2E | PostgreSQL test container |
+| **AC-044.2** | Given an `in_progress` collaboration, when either participant marks deliverables delivered, then a completion-confirmation request is recorded and the counterpart is notified in the collaboration thread; status remains `in_progress` until confirmation. | FEAT-044<br>FR-067<br>US-020 | Integration | PostgreSQL test container |
 
 ---
 

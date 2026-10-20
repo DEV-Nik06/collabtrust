@@ -7,20 +7,17 @@
 
 ## 1. Competitive Landscape Summary
 
-| Solution Category | Key Examples | Primary Target | Key Limitations for Our Segment |
-|---|---|---|---|
-| **Enterprise Influencer Platforms** | Grin, CreatorIQ, Aspire | Enterprise brands ($50k+ budgets) | Prohibitive software pricing ($12k–$30k/yr); complex enterprise workflows; ignore emerging micro-creators. |
-| **Traditional Talent Agencies** | Viral Nation, Influencer.com | Mid-to-large brands | High commission fees (15–30%); fixed creator rosters; slow manual booking. |
-| **Social Media Native Tools** | Instagram Creator Marketplace, TikTok Creator Hub | Platform-specific creators | Locked to single social silo; no cross-platform intelligence; opaque matching algorithms. |
-| **Informal Workarounds** | Instagram DMs, Email, Google Sheets | Small brands & micro-creators | Time-consuming; zero trust verification; frequent ghosting and non-delivery; disorganized communication. |
+> [!WARNING]
+> **Research Gap — TODO.** A competitive landscape and pricing analysis has **not yet been conducted**. Any competitor pricing, commission-fee, or budget figures previously listed here were unsourced and have been removed. A properly sourced competitive analysis (citing primary sources) must be completed before this section is used in any external-facing material. Competitive analysis is a stated prerequisite for validating the platform's market assumptions — see [`docs/01-product/target-users.md` §6](../../docs/01-product/target-users.md).
 
 ---
 
 ## 2. The CollabTrust Marketplace Opportunity
-The market is heavily saturated at the enterprise high end, while the long tail of emerging creators and small brands is left relying on informal DMs and spreadsheets.
 
-CollabTrust addresses this gap by offering:
-1. **Self-Service Affordability:** Designed for small businesses with budgets starting at $200–$1,000 per campaign.
+> **Assumption (unsourced):** The points below are working hypotheses, not verified market research. See the Research Gap noted in §1.
+
+CollabTrust targets the long tail of emerging creators and small brands that rely on informal DMs and spreadsheets, by offering:
+1. **Self-Service Affordability:** Designed for small businesses. Specific pricing or budget figures are intentionally omitted — no sourced data exists yet.
 2. **AI Speed & Structuring:** Turning raw campaign ideas into briefs in seconds.
 3. **Explainable Matching:** Explaining *why* a creator fits rather than presenting unexplained black-box rankings.
 4. **Transparent Trust Signals:** Observational signals that give small brands vetting confidence without expensive audit agencies.

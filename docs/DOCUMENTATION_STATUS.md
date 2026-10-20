@@ -1,6 +1,6 @@
 # CollabTrust — Master Documentation Status & Review Guide
 
-> **Status:** Complete Baseline (Ready for Human Review)  
+> **Status:** Complete Baseline (Ready for Human Review) — individual files carry per-file `Draft` statuses until review sign-off  
 > **Date:** 2026-10-12  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../PROJECT_CONTEXT.md)  
 
@@ -10,7 +10,7 @@
 
 In adherence to the documentation-first engineering principle, this document records the completion of the foundational documentation set for **CollabTrust**.
 
-All planned phases (**Phase A through Phase G**) and the centralized **Knowledge Base** are drafted, cross-referenced, and internally aligned. Zero application source code or database migrations have been implemented, preserving the repository's documentation-first baseline.
+All deliverable phases of the documentation roadmap (`PROJECT_CONTEXT.md` §9, **Phases 2–7: Product Definition through Testing & Deployment**) and the centralized **Knowledge Base** are drafted, cross-referenced, and internally aligned. Zero application source code or database migrations have been implemented, preserving the repository's documentation-first baseline.
 
 ### Core Marketplace Problems Consistently Enforced
 1. **Brands:** Cannot easily discover relevant creators within limited budgets, nor evaluate authenticity and fit.
@@ -20,25 +20,25 @@ All planned phases (**Phase A through Phase G**) and the centralized **Knowledge
 
 ## 2. Deliverables Inventory by Phase
 
-### Phase A — Product Definition (`docs/01-product/`)
+### Phase 2 — Product Definition (`docs/01-product/`)
 * [`product-vision.md`](./01-product/product-vision.md) — Mission, vision, core principles, non-goals, and AI capabilities.
 * [`problem-definition.md`](./01-product/problem-definition.md) — Detailed problem statements, root causes, market gap, and unvalidated assumptions.
 * [`target-users.md`](./01-product/target-users.md) — Two-sided marketplace segments, initial focus, and secondary users.
-* [`personas.md`](./01-product/personas.md) — Illustrative personas (Priya Sharma, Daniel Okafor, Maya Torres, Jordan Ellis).
+* [`personas.md`](./01-product/personas.md) — Illustrative personas (Priya Sharma, Daniel Okafor, Lisa Chen, Maya Torres, Jordan Ellis).
 * [`user-journeys.md`](./01-product/user-journeys.md) — Four primary end-to-end user journeys (J-1 through J-4).
 * [`goals-success-metrics.md`](./01-product/goals-success-metrics.md) — Product goals (G-1 to G-6) and 14 measurable success metrics.
 * [`mvp-scope.md`](./01-product/mvp-scope.md) — MoSCoW feature cut-lines, AI agent MVP status, and technical constraints.
-* [`feature-requirements.md`](./01-product/feature-requirements.md) — 28 features (`FEAT-001`–`FEAT-052`) with acceptance criteria.
+* [`feature-requirements.md`](./01-product/feature-requirements.md) - 28 features (`FEAT-001`-`FEAT-052`), each linked to its canonical acceptance-criteria group.
 * [`PRD.md`](./01-product/PRD.md) — Consolidated Product Requirements Document index.
 
-### Phase B — Engineering Requirements (`docs/02-requirements/`)
+### Phase 3 — Engineering Requirements (`docs/02-requirements/`)
 * [`SRS.md`](./02-requirements/SRS.md) — Software Requirements Specification baseline.
 * [`functional-requirements.md`](./02-requirements/functional-requirements.md) — 62 testable requirements (`FR-001`–`FR-076`) traced to features.
 * [`non-functional-requirements.md`](./02-requirements/non-functional-requirements.md) — 52 quality attributes (`NFR-001`–`NFR-077`) covering performance, security, and AI safety.
 * [`user-stories.md`](./02-requirements/user-stories.md) — 50 user stories (`US-001`–`US-050`) mapped to personas and features.
-* [`acceptance-criteria.md`](./02-requirements/acceptance-criteria.md) — 80 canonical criteria (`AC-001.1`–`AC-052.2`) with test methods.
+* [`acceptance-criteria.md`](./02-requirements/acceptance-criteria.md) - 65 canonical criteria (`AC-001.1`-`AC-052.2`) with test methods. Single source of truth — no other document defines acceptance criteria.
 
-### Phase C — Architecture (`docs/03-architecture/`)
+### Phase 4 — Architecture (`docs/03-architecture/`)
 * [`system-architecture.md`](./03-architecture/system-architecture.md) — Monolithic layered architecture and component responsibilities.
 * [`database-design.md`](./03-architecture/database-design.md) — PostgreSQL 15 schema (9 entities) with indexes and relationships.
 * [`api-design.md`](./03-architecture/api-design.md) — RESTful API endpoint catalog under `/api/v1` with JSON payloads.
@@ -50,7 +50,7 @@ All planned phases (**Phase A through Phase G**) and the centralized **Knowledge
   * [`ADR-004-ai-architecture.md`](./03-architecture/ADR/ADR-004-ai-architecture.md) — Embedded lightweight AI service layer with Zod schemas.
   * [`ADR-005-deployment.md`](./03-architecture/ADR/ADR-005-deployment.md) — Cloud PaaS deployment strategy.
 
-### Phase D — AI Specifications (`docs/04-ai/`)
+### Phase 5 — AI (`docs/04-ai/`)
 * [`ai-architecture.md`](./04-ai/ai-architecture.md) — Subsystem architecture and pipeline flow.
 * [`agent-specifications.md`](./04-ai/agent-specifications.md) — Detailed specifications for all 6 planned agents.
 * [`tool-permissions.md`](./04-ai/tool-permissions.md) — Principle of least privilege, sandboxing, and prohibited tool actions.
@@ -59,17 +59,17 @@ All planned phases (**Phase A through Phase G**) and the centralized **Knowledge
 * [`evaluation-plan.md`](./04-ai/evaluation-plan.md) — Benchmarking datasets, automated test scripts, and pass/fail metrics.
 * [`safety-guardrails.md`](./04-ai/safety-guardrails.md) — Prohibited terminology rules, mandatory disclaimers, and prompt injection mitigation.
 
-### Phase E — Design (`docs/05-design/`)
+### Phase 6 — Design (`docs/05-design/`)
 * [`ux-flows.md`](./05-design/ux-flows.md) — Sitemaps and Mermaid interaction flowcharts.
 * [`design-system.md`](./05-design/design-system.md) — Color palette, typography scale, responsive breakpoints, and UI component standards.
 * [`wireframes/README.md`](./05-design/wireframes/README.md) — Structural layout blueprints for core screens.
 
-### Phase F — Testing (`docs/06-testing/`)
+### Phase 7 — Testing (`docs/06-testing/`)
 * [`test-strategy.md`](./06-testing/test-strategy.md) — Testing pyramid (Vitest, Supertest, Playwright) and CI quality gates.
 * [`test-plan.md`](./06-testing/test-plan.md) — Execution suites, defect severity SLA, and entry/exit criteria.
 * [`test-cases.md`](./06-testing/test-cases.md) — Concrete itemized test cases mapped to acceptance criteria.
 
-### Phase G — Deployment & Operations (`docs/07-deployment/`)
+### Phase 7 — Deployment & Operations (`docs/07-deployment/`)
 * [`deployment-guide.md`](./07-deployment/deployment-guide.md) — Local development setup and cloud PaaS deployment procedures.
 * [`environment-configuration.md`](./07-deployment/environment-configuration.md) — Environment variables ledger and secrets management.
 * [`ci-cd.md`](./07-deployment/ci-cd.md) — GitHub Actions workflow configuration.

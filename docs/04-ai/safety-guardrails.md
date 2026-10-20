@@ -1,7 +1,7 @@
 # CollabTrust — AI Safety & Guardrails
 
 > **Status:** Draft  
-> **Phase:** Phase D — AI Specifications  
+> **Phase:** Phase 5 — AI  
 > **Depends on:** [`product-vision.md`](../01-product/product-vision.md), [`problem-definition.md`](../01-product/problem-definition.md), [`agent-specifications.md`](./agent-specifications.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -25,9 +25,11 @@ CollabTrust implements strict architectural, algorithmic, and copy guardrails to
 Automated systems that label content creators as "fake" or "fraudulent" risk causing severe reputational damage based on imperfect public metrics or algorithmic errors. Conversely, systems that label accounts as "certified authentic" create dangerous false senses of security for brands.
 
 ### The Guardrail
-* **Prohibited Terminology:** AI agents, backend services, and frontend UI components are prohibited from using definitive fraud assertions:
-  * ❌ Prohibited: `"Fake account"`, `"Guaranteed fraud"`, `"100% authentic"`, `"Certified genuine"`, `"Verified non-fraudulent"`.
+* **Prohibited Terminology (Canonical List):** AI agents, backend services, and frontend UI components are prohibited from using definitive fraud or authenticity assertions:
+  * ❌ Fraud assertions: `"Fake account"`, `"Fake followers"`, `"Guaranteed fraud"`, `"Proven fraud"`, `"Fraud detected"`, `"Verified non-fraudulent"`.
+  * ❌ Authenticity guarantees: `"Guaranteed authentic"`, `"Certified authentic"`, `"Authentic certified"`, `"100% authentic"`, `"Certified genuine"`.
   * ✅ Permitted: `"Observational signals"`, `"Consistent engagement ratio"`, `"Unusual follower growth spike observed"`, `"Self-reported audience metrics"`.
+* **Single Source of Truth:** This section is the **canonical** prohibited-terminology list for the entire project. All other documents (evaluation plans, test cases, functional requirements, prompt specifications) must reference this section rather than copying or paraphrasing variant lists.
 * **Mandatory Copy Disclaimer:** Every UI card, modal, or API response displaying trust signals must include the following verbatim disclaimer:
   > *"Informational observations only. CollabTrust surfaces signals and evidence, not fraud guarantees or definitive authenticity verdicts."*
 * **Architectural Enforcement:** The backend Trust Analysis service passes all generated text through a string filter that validates against prohibited terminology before persisting or returning data.
@@ -50,7 +52,7 @@ Automated systems that label content creators as "fake" or "fraudulent" risk cau
 
 ## 4. Guardrail 3: Prompt Injection Mitigation & Schema Enforcement
 
-* **XML Tag Delimitation:** All untrusted user inputs (free-text campaign descriptions, creator bios, pitches) are sanitized and wrapped in unambiguous XML tags (`<user_campaign_input>`). System instructions explicitly instruct models to treat wrapped text purely as unstructured data.
+* **XML Tag Delimitation:** All untrusted user inputs (free-text campaign descriptions, creator bios, pitches) are sanitized and wrapped in unambiguous XML tags — raw user free text uses `<user_input>`; serialized JSON context uses named data tags (e.g., `<campaign_brief>`, `<creator_profile>`). Every system prompt explicitly instructs the model to treat wrapped text purely as unstructured, untrusted data and never as instructions (see [`prompt-specifications.md`](./prompt-specifications.md)).
 * **Schema Validation (Zod):** Models are forced to output JSON. The backend parses and strictly validates the JSON against Zod schemas. If the output deviates or contains extraneous non-JSON content, the request fails gracefully to deterministic fallback UI forms.
 * **Prompt Isolation:** Prompts do not contain internal system secrets, database credentials, or private communication histories of other users.
 

@@ -22,7 +22,6 @@
 
 * OS:
 * Browser:
-* Application version:
 
 ## Screenshots / Logs
 

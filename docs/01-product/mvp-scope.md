@@ -128,13 +128,11 @@ Features are prioritized using MoSCoW classification:
 
 ### 3.6 Admin
 
-| Feature | Priority | Notes |
-|---|---|---|
-| Basic admin dashboard | **NICE-TO-HAVE** | View users, campaigns, and collaborations. Only if needed to support MVP demos or internal testing. |
+> **Removed from MVP scope (2026-10-20):** An admin role/dashboard is **not** part of the MVP (only `brand` and `creator` roles exist per FR-001). The row previously here is now listed under §4.
 
 ---
 
-## 4. MVP Features — Explicitly Out of Scope
+## 4. MVP Features - Explicitly Out of Scope
 
 The following features are planned for future phases but are **not included** in the MVP. This boundary is intentional to keep scope focused on validating the core marketplace loop.
 
@@ -152,6 +150,7 @@ The following features are planned for future phases but are **not included** in
 | **Rating / review system** | Post-collaboration reputation tracking is post-MVP. |
 | **Multi-language support** | English only for MVP. |
 | **Autonomous payments, dispute resolution** | Explicitly excluded per [product-vision.md § 8](./product-vision.md). |
+| **Admin role & admin dashboard** | Moved out of MVP on 2026-10-20; only `brand` and `creator` roles exist (FR-001). Requires new requirements, schema, and access-control changes before introduction. |
 
 ---
 

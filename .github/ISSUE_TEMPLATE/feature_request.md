@@ -16,7 +16,6 @@
 
 * [ ] Brand
 * [ ] Creator
-* [ ] Admin
 * [ ] Developer
 * [ ] Other
 

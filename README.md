@@ -14,7 +14,7 @@ transparent, and efficient.
 - AI-powered creator matching
 - AI-assisted trust analysis
 - AI campaign brief generation
-- Automated collaboration workflows
+- Human-controlled collaboration workflows
 
 ## Technology Stack
 
@@ -27,17 +27,26 @@ transparent, and efficient.
 
 ## Project Structure
 
-- `apps/web` - Frontend application
-- `apps/api` - Backend API
-- `apps/worker` - Background jobs and workflows
-- `packages` - Shared code and AI components
-- `docs` - Product and technical documentation
+- `apps/web` - Frontend application *(planned — directory is currently empty)*
+- `apps/api` - Backend API *(planned — directory is currently empty)*
+- `apps/worker` - Background jobs and workflows *(planned — directory is currently empty)*
+- `packages` - Shared code and AI components *(planned — currently empty)*
+- `docs` - Product and technical documentation *(complete — see below)*
 - `knowledge-base` - Central project knowledge
 
 ## Project Status
 
-Phase 1: Repository setup
+**Documentation phase complete; no application code exists yet.**
+
+This repository currently contains the full product and technical
+documentation set (product definition, requirements, architecture, AI
+design, UX design, testing, and deployment plans). The directories listed
+as "planned" above are empty scaffolding reserved for the upcoming build
+phase. CI is not running yet — `.github/workflows/` contains only the
+planned blueprint in [`docs/07-deployment/ci-cd.md`](docs/07-deployment/ci-cd.md).
+
+Current handoff state: see [`PROJECT_CONTEXT.md`](PROJECT_CONTEXT.md) §16.
 
 ## Documentation
 
-See the `docs/` directory for project documentation.
+Start with [`docs/README.md`](docs/README.md) for the documentation index.

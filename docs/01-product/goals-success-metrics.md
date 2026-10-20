@@ -202,5 +202,5 @@ The goals and metrics defined in this document rest on the following assumptions
 | [`product-vision.md`](./product-vision.md) | Mission, vision, principles, and product boundaries |
 | [`problem-definition.md`](./problem-definition.md) | Detailed problem analysis, root causes, and assumptions |
 | [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md) | Master handoff document; phase status, next task, working rules |
-| `mvp-scope.md` (upcoming — Phase 2.7) | Detailed MVP scope, feature priorities, and cut-line decisions |
+| [`mvp-scope.md`](./mvp-scope.md) | Detailed MVP scope, feature priorities, and cut-line decisions |
 | [`docs/README.md`](../README.md) | Documentation directory index |

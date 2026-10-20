@@ -117,7 +117,7 @@ The following user types may be served in future phases but are **not primary ta
 | **Marketing managers at larger companies** | Have existing agency relationships and enterprise tools. May use CollabTrust for niche campaigns. | Already served by existing tools; not the underserved segment. |
 | **Talent agencies and creator management** | Manage rosters of creators and negotiate on their behalf. | Adds multi-party complexity; not needed for core loop validation. |
 | **Freelance marketing consultants** | Manage influencer campaigns on behalf of multiple small brands. | Interesting growth segment but not needed for MVP. |
-| **Platform administrators** | Internal team managing the CollabTrust platform. | Basic admin capability may be included but is not a user segment to design for. |
+| **Platform administrators** | Internal team managing the CollabTrust platform. | Admin functionality is explicitly out of MVP scope (see [`mvp-scope.md` § 4](./mvp-scope.md#4-mvp-features---explicitly-out-of-scope)); internal operations will rely on direct tooling instead. |
 
 ---
 

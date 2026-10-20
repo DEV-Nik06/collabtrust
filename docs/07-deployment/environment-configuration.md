@@ -1,7 +1,7 @@
 # CollabTrust — Environment Configuration
 
 > **Status:** Draft (Proposed)  
-> **Phase:** Phase G — Deployment and Operations  
+> **Phase:** Phase 7 — Testing & Deployment  
 > **Depends on:** [`deployment-guide.md`](./deployment-guide.md), [`security-design.md`](../03-architecture/security-design.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -24,13 +24,16 @@ This document defines all runtime configuration variables for CollabTrust across
 | `PORT` | No | `3000` | Backend | HTTP server listening port |
 | `DATABASE_URL` | Yes | `postgresql://user:pass@localhost:5432/collabtrust` | Backend | PostgreSQL connection string with credentials |
 | `JWT_SECRET` | Yes | `changeme_in_production_256bit_secret` | Backend | Secret key used to sign and verify HMAC-SHA256 JWTs |
-| `JWT_EXPIRY` | No | `24h` | Backend | Lifetime of authenticated user session tokens |
+| `JWT_EXPIRY` | No | `15m` | Backend | Lifetime of authenticated user session tokens |
+| `JWT_REFRESH_EXPIRY` | No | `7d` | Backend | Lifetime of refresh tokens, per NFR-010's 7-day refresh-token requirement |
 | `CORS_ORIGIN` | Yes | `http://localhost:5173` | Backend | Allowed origin for frontend requests |
 | `LLM_PROVIDER` | Yes | `anthropic` / `openai` / `gemini` | Backend | Active AI model provider adapter |
-| `LLM_API_KEY` | Yes | `sk-live-...` | Backend | Secret API authentication key for LLM provider |
-| `LLM_MODEL_NAME` | No | `claude-3-5-sonnet-20241022` | Backend | Specific model identifier |
+| `LLM_API_KEY` | Yes | `your-llm-provider-api-key` | Backend | Secret API authentication key for LLM provider |
+| `LLM_MODEL_NAME` | No | `your-model-id` | Backend | Specific model identifier (benchmark pending — see [`DOCUMENTATION_STATUS.md`](../DOCUMENTATION_STATUS.md) open questions) |
+| `LLM_MAX_TOKENS` | No | `2000` | Backend | Maximum completion tokens per LLM request; pinned by the AI evaluation plan for reproducible evals (see [`evaluation-plan.md`](../04-ai/evaluation-plan.md)) |
+| `LLM_TEMPERATURE` | No | `0.2` | Backend | Sampling temperature for LLM requests; pinned by the AI evaluation plan for reproducible evals (see [`evaluation-plan.md`](../04-ai/evaluation-plan.md)) |
 | `LOG_LEVEL` | No | `info` (`debug` in local dev) | Backend | Pino / Winston logging verbosity |
-| `VITE_API_URL` | Yes | `http://localhost:3000/api/v1` | Frontend | Base URL for backend API requests |
+| `VITE_API_URL` | Yes | `http://localhost:3000/api/v1` | Frontend | Full base URL for backend API requests, including the `/api/v1` path prefix — same convention in every environment |
 
 ---
 

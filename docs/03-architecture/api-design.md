@@ -1,7 +1,7 @@
 # CollabTrust — REST API Design
 
 > **Status:** Draft (Proposed)  
-> **Phase:** Phase C — Architecture  
+> **Phase:** Phase 4 — Architecture  
 > **Depends on:** [`system-architecture.md`](./system-architecture.md), [`database-design.md`](./database-design.md), [`functional-requirements.md`](../02-requirements/functional-requirements.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -21,22 +21,26 @@ The CollabTrust backend exposes an HTTP REST API under base path `/api/v1`. All 
 
 ## 2. Standard Error Response Schema
 
-All error responses return a uniform JSON format:
+All error responses return a uniform JSON format (canonical envelope, per NFR-017):
 
 ```json
 {
-  "error": {
-    "code": "BAD_REQUEST",
-    "message": "Human-readable description of error condition",
-    "details": [
-      {
-        "field": "budgetRange",
-        "issue": "Budget range must be specified"
-      }
-    ]
-  }
+  "code": "BAD_REQUEST",
+  "message": "Human-readable description of error condition",
+  "requestId": "req_01HZX3...",
+  "details": [
+    {
+      "field": "budgetRange",
+      "issue": "Budget range must be specified"
+    }
+  ]
 }
 ```
+
+* `code`: stable machine-readable error code (SCREAMING_SNAKE_CASE).
+* `message`: human-readable description; safe to show to end users.
+* `requestId`: correlation ID, also returned in the `X-Request-Id` response header; required on every error response (NFR-017).
+* `details` *(optional)*: field-level validation information, present for 400-class validation errors.
 
 ---
 
@@ -177,6 +181,8 @@ All error responses return a uniform JSON format:
     }
   }
   ```
+  The brief always contains all seven fields: `title`, `goals`, `targetAudience`, `deliverables`, `timeline`, `budget`, `requirements` (FR-021, AC-011.2).
+* **Fallback (200 OK):** if the agent times out or returns unparseable output, respond `{"fallback": true, "structuredBrief": null}` so the client renders the manual form with an error notice (AC-011.3). The endpoint never returns 5xx for agent failures.
 
 #### `POST /api/v1/campaigns`
 * **Access:** Authenticated (Brand role)
@@ -195,7 +201,18 @@ All error responses return a uniform JSON format:
 
 #### `GET /api/v1/campaigns`
 * **Access:** Authenticated (Creator / Brand)
-* **Purpose:** Query active campaigns (Creators) or user's campaigns (Brands). Supports query params `?category=&budget=&page=&limit=`.
+* **Purpose:** Query active campaigns (Creators) or user's campaigns (Brands). Supports query params `?category=&budget=&page=&limit=`. `category` filters the denormalized `Campaign.category` column (copied from the brand profile at publish; see [`database-design.md` §3.4](./database-design.md)).
+
+#### `POST /api/v1/campaigns/:id/close`
+* **Access:** Authenticated (Brand owner)
+* **Purpose:** Close an active campaign (`active` -> `closed`), disabling further creator applications (FR-030, AC-016.1).
+* **Response (200 OK):** Returns Campaign object with status `closed`.
+* **Errors:** 403 for non-owners; 409 if the campaign is not `active`.
+
+#### `DELETE /api/v1/users/me`
+* **Access:** Authenticated
+* **Purpose:** Permanently delete the authenticated user's account and associated personal data (NFR-064). Profile, campaigns, applications, collaborations, and messages are removed or anonymized per the retention rules in [`security-design.md`](./security-design.md).
+* **Response (200 OK):** `{"message": "Account deleted"}`; all of the user's tokens are revoked immediately.
 
 #### `GET /api/v1/campaigns/:id`
 * **Access:** Authenticated
@@ -231,9 +248,14 @@ All error responses return a uniform JSON format:
   }
   ```
 
+#### `POST /api/v1/matches/refresh`
+* **Access:** Authenticated (Brand owner)
+* **Purpose:** Explicitly re-run the Creator Matching Agent for a campaign, bypassing the match cache (FR-047). Invoked by the "Refresh Matches" action in the brand match console (see [`workflow-specifications.md` Workflow 2](../04-ai/workflow-specifications.md)).
+* **Response (200 OK):** Returns the refreshed match set.
+
 #### `GET /api/v1/creators/:id/trust-signals`
 * **Access:** Authenticated (Brand role)
-* **Purpose:** Retrieve Trust Analysis Agent evaluation report.
+* **Purpose:** Retrieve Trust Analysis Agent evaluation report. All signals are derived solely from the creator's self-reported profile data — the MVP has no third-party platform integration — and each signal is labeled with its observational category per the `signalType` enum in [`database-design.md` §3.9](./database-design.md).
 * **Response (200 OK):**
   ```json
   {
@@ -247,12 +269,12 @@ All error responses return a uniform JSON format:
       },
       {
         "signalType": "engagement_consistency",
-        "signalValue": "Consistent ratio of comments to likes over recent posts",
+        "signalValue": "Self-reported engagement figures are internally consistent with the stated audience size",
         "severity": "info"
       },
       {
         "signalType": "growth_pattern",
-        "signalValue": "Steady linear follower progression without suspicious spikes",
+        "signalValue": "Self-reported follower history shows steady progression; figures are creator-reported, not platform-verified",
         "severity": "info"
       }
     ],
@@ -290,7 +312,11 @@ All error responses return a uniform JSON format:
 
 #### `PUT /api/v1/collaborations/:id/status`
 * **Access:** Authenticated (Participant)
-* **Purpose:** Transition collaboration lifecycle (`in_progress`, `completed`).
+* **Purpose:** Drive the collaboration lifecycle. Allowed transitions and who may trigger them:
+  * `invited` -> `accepted`: **creator only** — the creator's explicit acknowledgement of the brand's invitation (FR-064, AC-041.4).
+  * `accepted` -> `in_progress`: **either participant**, once collaboration work begins (FR-065).
+  * `in_progress` -> `completed`: **either participant requests completion** via deliverable marking (FR-067); the transition is finalized on the counterpart's confirmation or brand finalization (FR-068, AC-044.1/AC-044.2). A completion request alone leaves status at `in_progress` and posts a confirmation notice to the thread.
+  * All other transitions return 409 Conflict; wrong-role attempts return 403.
 
 #### `GET /api/v1/collaborations/:id/messages`
 * **Access:** Authenticated (Participant)

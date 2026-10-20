@@ -23,7 +23,7 @@ Key constraints:
 
 We propose the following core technology stack:
 * **Frontend:** React 18+ with TypeScript, styled using Tailwind CSS and bundled with Vite.
-* **Backend:** Node.js 18+ LTS with Express and TypeScript.
+* **Backend:** Node.js 20+ LTS (20.x or 22.x; Node 18 reached EOL April 2025) with Express and TypeScript.
 * **Database & ORM:** PostgreSQL 15+ using Prisma ORM.
 * **API Style:** REST over HTTP with JSON payloads and OpenAPI 3.0 documentation.
 * **Testing:** Vitest for unit tests, Supertest for API integration tests, and Playwright for E2E workflows.

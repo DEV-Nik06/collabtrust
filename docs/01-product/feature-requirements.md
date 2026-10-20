@@ -44,6 +44,9 @@
 
 ## 2. Feature Details
 
+> [!IMPORTANT]
+> **Acceptance criteria authority:** This document defines *what each feature is*. Testable acceptance criteria live exclusively in [`acceptance-criteria.md`](../02-requirements/acceptance-criteria.md). Each feature below links to its canonical AC group; no AC text is duplicated here, so the two documents can never drift apart.
+
 ### 2.1 Authentication & User Management
 
 #### FEAT-001 — User Registration
@@ -58,11 +61,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | None |
 
-**Acceptance Criteria:**
-- AC-001.1: A user can register with a valid email and password.
-- AC-001.2: The user must select a role (brand or creator) during registration.
-- AC-001.3: Duplicate email addresses are rejected with an appropriate error message.
-- AC-001.4: Passwords meet minimum security requirements (length, complexity — details TBD in security design).
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-001.x`.
 
 #### FEAT-002 — User Login / Authentication
 
@@ -76,10 +75,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-001 |
 
-**Acceptance Criteria:**
-- AC-002.1: A registered user can log in with correct credentials.
-- AC-002.2: Invalid credentials return an appropriate error message without leaking information.
-- AC-002.3: Authenticated sessions persist across page reloads until explicit logout or expiry.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-002.x`.
 
 #### FEAT-003 — Brand Profile Management
 
@@ -93,10 +89,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-001, FEAT-002 |
 
-**Acceptance Criteria:**
-- AC-003.1: Brand users can create a profile with required fields (company name, category, description).
-- AC-003.2: Brand users can edit their profile at any time.
-- AC-003.3: Brand profiles are viewable by creator users.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-003.x`.
 
 #### FEAT-004 — Creator Profile Management
 
@@ -110,11 +103,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-001, FEAT-002 |
 
-**Acceptance Criteria:**
-- AC-004.1: Creator users can create a profile with required fields (niche, at least one platform, audience size estimate).
-- AC-004.2: Creator users can edit their profile at any time.
-- AC-004.3: Creator profiles are viewable by brand users.
-- AC-004.4: Profile completeness is tracked and displayed to the creator.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-004.x`.
 
 #### FEAT-005 — Password Reset
 
@@ -128,11 +117,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-001 |
 
-**Acceptance Criteria:**
-- AC-005.1: A registered user can request a password reset link sent to their email.
-- AC-005.2: The reset link expires after a reasonable time period.
-- AC-005.3: After resetting, the user can log in with the new password.
-
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-005.x`.
 ---
 
 ### 2.2 Campaign Management
@@ -149,10 +134,7 @@
 | **AI Involvement** | Input to Campaign Brief Agent |
 | **Dependencies** | FEAT-002, FEAT-003 |
 
-**Acceptance Criteria:**
-- AC-010.1: Brand users can enter campaign information as free text.
-- AC-010.2: The input is submitted to the Campaign Brief Agent for structuring.
-- AC-010.3: A loading/processing indicator is shown while the agent processes.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-010.x`.
 
 #### FEAT-011 — Campaign Brief Agent Structuring
 
@@ -166,11 +148,7 @@
 | **AI Involvement** | **Campaign Brief Agent** (hackathon priority 1) |
 | **Dependencies** | FEAT-010 |
 
-**Acceptance Criteria:**
-- AC-011.1: The agent produces a structured campaign draft from free-text input.
-- AC-011.2: The structured draft contains at minimum: title, goals, target audience, deliverables, and budget.
-- AC-011.3: The draft is presented to the brand in an editable format.
-- AC-011.4: If the agent fails or produces poor output, a graceful fallback is provided (e.g., manual form entry).
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-011.x`.
 
 #### FEAT-012 — Campaign Editing and Review
 
@@ -184,9 +162,7 @@
 | **AI Involvement** | None (user edits AI output) |
 | **Dependencies** | FEAT-011 |
 
-**Acceptance Criteria:**
-- AC-012.1: All fields of the structured brief are editable by the brand.
-- AC-012.2: Changes are saved (draft state) and can be revised before publishing.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-012.x`.
 
 #### FEAT-013 — Campaign Publishing
 
@@ -200,10 +176,7 @@
 | **AI Involvement** | Triggers Creator Matching Agent |
 | **Dependencies** | FEAT-012 |
 
-**Acceptance Criteria:**
-- AC-013.1: A brand can publish a completed campaign brief.
-- AC-013.2: Published campaigns appear in the creator-facing campaign listing.
-- AC-013.3: Publishing triggers creator matching (FEAT-020).
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-013.x`.
 
 #### FEAT-014 — Campaign Listing
 
@@ -217,9 +190,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-013 |
 
-**Acceptance Criteria:**
-- AC-014.1: Active campaigns are listed with summary information (title, brand, category, budget range).
-- AC-014.2: The listing is paginated or scrollable for larger sets.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-014.x`.
 
 #### FEAT-015 — Campaign Detail View
 
@@ -233,9 +204,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-014 |
 
-**Acceptance Criteria:**
-- AC-015.1: Campaign detail view shows all structured fields: title, goals, target audience, deliverables, timeline, budget, requirements, and brand profile link.
-- AC-015.2: Creators can navigate to the brand's profile from the campaign detail view.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-015.x`.
 
 #### FEAT-016 — Campaign Status Management
 
@@ -249,10 +218,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-013 |
 
-**Acceptance Criteria:**
-- AC-016.1: Campaigns transition through defined statuses.
-- AC-016.2: Brands can close/complete a campaign.
-- AC-016.3: Closed campaigns are no longer visible to creators in the listing.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-016.x`.
 
 #### FEAT-017 — Campaign Filtering / Search
 
@@ -266,10 +232,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-014 |
 
-**Acceptance Criteria:**
-- AC-017.1: Creators can filter campaigns by at least one attribute (e.g., category).
-- AC-017.2: Filter results update without full page reload.
-
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-017.x`.
 ---
 
 ### 2.3 Creator Discovery & Matching
@@ -286,10 +249,7 @@
 | **AI Involvement** | **Creator Matching Agent** (hackathon priority 3) |
 | **Dependencies** | FEAT-013, FEAT-004 |
 
-**Acceptance Criteria:**
-- AC-020.1: At least one matched creator is returned for campaigns where matching profiles exist.
-- AC-020.2: Matches are ranked by relevance.
-- AC-020.3: If no matches are found, the brand receives a clear message (not an error).
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-020.x`.
 
 #### FEAT-021 — Match Explanation Display
 
@@ -303,10 +263,7 @@
 | **AI Involvement** | **Creator Matching Agent** (output) |
 | **Dependencies** | FEAT-020 |
 
-**Acceptance Criteria:**
-- AC-021.1: Every match result includes a textual explanation.
-- AC-021.2: The explanation references specific alignment factors (e.g., audience category overlap, content style match).
-- AC-021.3: Explanations are understandable to a non-technical user.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-021.x`.
 
 #### FEAT-022 — Creator Browsing / Search (Manual)
 
@@ -320,9 +277,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-004 |
 
-**Acceptance Criteria:**
-- AC-022.1: Brands can view a list of creator profiles.
-- AC-022.2: Brands can search or filter by niche/category.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-022.x`.
 
 #### FEAT-023 — Creator Profile Viewing with Insights
 
@@ -336,11 +291,7 @@
 | **AI Involvement** | **Profile Insight Agent** |
 | **Dependencies** | FEAT-004 |
 
-**Acceptance Criteria:**
-- AC-023.1: A profile insight summary is displayed alongside the creator's profile.
-- AC-023.2: The summary highlights key attributes relevant to campaign fit.
-- AC-023.3: If the Profile Insight Agent is unavailable, the raw profile data is still displayed.
-
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-023.x`.
 ---
 
 ### 2.4 Trust & Analysis
@@ -357,12 +308,7 @@
 | **AI Involvement** | **Trust Analysis Agent** (hackathon priority 2) |
 | **Dependencies** | FEAT-004 |
 
-**Acceptance Criteria:**
-- AC-030.1: Trust signals are displayed when a brand views a creator's profile.
-- AC-030.2: Signals include at minimum: engagement quality indicators, profile completeness, and any flagged anomalies.
-- AC-030.3: Anomalies are described as observations, not verdicts.
-- AC-030.4: No claim of fraud detection or authenticity guarantee is made.
-
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-030.x`.
 > [!IMPORTANT]
 > Trust Analysis must present **signals and evidence**, not fraud verdicts or definitive authenticity claims. This is a core product principle. See [product-vision.md §6, Principle 3](./product-vision.md#6-core-product-principles).
 
@@ -378,9 +324,7 @@
 | **AI Involvement** | None (computed from profile data) |
 | **Dependencies** | FEAT-003 |
 
-**Acceptance Criteria:**
-- AC-031.1: Trust indicators are displayed on brand profiles when viewed by creators.
-- AC-031.2: At minimum, profile completeness and account age are shown.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-031.x`.
 
 #### FEAT-032 — Signal Limitations Disclosure
 
@@ -394,10 +338,7 @@
 | **AI Involvement** | None (UI/copy) |
 | **Dependencies** | FEAT-030 |
 
-**Acceptance Criteria:**
-- AC-032.1: A disclosure is visible alongside every trust signal display.
-- AC-032.2: The disclosure explicitly states that signals are not fraud detection or authenticity guarantees.
-
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-032.x`.
 ---
 
 ### 2.5 Collaboration Workflow
@@ -414,10 +355,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-015, FEAT-004 |
 
-**Acceptance Criteria:**
-- AC-040.1: Creators can apply to a campaign from the campaign detail view.
-- AC-040.2: The application is visible to the brand.
-- AC-040.3: Creators can see a list of campaigns they have applied to.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-040.x`.
 
 #### FEAT-041 — Brand Reviews and Selects Creators
 
@@ -431,10 +369,7 @@
 | **AI Involvement** | None (selection is human decision) |
 | **Dependencies** | FEAT-020, FEAT-040 |
 
-**Acceptance Criteria:**
-- AC-041.1: Brands can view a list of applications and matched creators for a campaign.
-- AC-041.2: Brands can select (accept) or decline creator applications.
-- AC-041.3: The selection decision is made by the brand user — not by AI.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-041.x`.
 
 #### FEAT-042 — Collaboration Status Tracking
 
@@ -448,10 +383,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-041 |
 
-**Acceptance Criteria:**
-- AC-042.1: Collaboration status is visible to both the brand and the creator.
-- AC-042.2: Status can be updated by the appropriate party.
-- AC-042.3: Status transitions follow the defined lifecycle.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-042.x`.
 
 #### FEAT-043 — Basic Messaging / Communication
 
@@ -465,9 +397,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-042 |
 
-**Acceptance Criteria:**
-- AC-043.1: Both parties can post messages/notes within a collaboration.
-- AC-043.2: Messages are displayed in chronological order.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-043.x`.
 
 #### FEAT-044 — Collaboration Completion
 
@@ -481,10 +411,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-042 |
 
-**Acceptance Criteria:**
-- AC-044.1: A collaboration can be marked as Completed.
-- AC-044.2: Completed collaborations are visible in the user's history.
-
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-044.x`.
 ---
 
 ### 2.6 Dashboard & Navigation
@@ -501,10 +428,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-003, FEAT-013, FEAT-020, FEAT-042 |
 
-**Acceptance Criteria:**
-- AC-050.1: The dashboard shows a summary of active campaigns and their status.
-- AC-050.2: The dashboard shows pending creator applications.
-- AC-050.3: The dashboard shows active collaborations.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-050.x`.
 
 #### FEAT-051 — Creator Dashboard
 
@@ -518,10 +442,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-004, FEAT-014, FEAT-040, FEAT-042 |
 
-**Acceptance Criteria:**
-- AC-051.1: The dashboard shows campaigns relevant to the creator.
-- AC-051.2: The dashboard shows submitted applications and their status.
-- AC-051.3: The dashboard shows active collaborations.
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-051.x`.
 
 #### FEAT-052 — Navigation and Layout
 
@@ -535,10 +456,7 @@
 | **AI Involvement** | None |
 | **Dependencies** | FEAT-002 |
 
-**Acceptance Criteria:**
-- AC-052.1: Navigation is role-aware (brand users see brand-relevant sections; creators see creator-relevant sections).
-- AC-052.2: Key actions (create campaign, browse campaigns, view dashboard) are accessible within one click from the main navigation.
-
+**Acceptance Criteria:** Defined canonically in [acceptance-criteria.md](../02-requirements/acceptance-criteria.md) as `AC-052.x`.
 ---
 
 ## 3. Feature Interactions
@@ -569,14 +487,14 @@ Brand-side trust signals (FEAT-031) are consumed during the creator evaluation s
 
 | Feature | Reason | Reference |
 |---|---|---|
-| Payment processing | Regulatory complexity; not needed for core loop validation | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features--explicitly-out-of-scope) |
+| Payment processing | Regulatory complexity; not needed for core loop validation | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features---explicitly-out-of-scope) |
 | Autonomous outreach | Conflicts with human-controlled principle | [product-vision.md §6](./product-vision.md#6-core-product-principles) |
-| Advanced analytics / dashboards | Not needed for MVP validation | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features--explicitly-out-of-scope) |
-| Multi-platform social API integrations | MVP uses self-reported data | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features--explicitly-out-of-scope) |
-| Legal contract generation | Requires legal review | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features--explicitly-out-of-scope) |
-| Mobile application | Web-only for MVP | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features--explicitly-out-of-scope) |
-| Rating / review system | Post-collaboration reputation is post-MVP | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features--explicitly-out-of-scope) |
-| Notification system (beyond basic) | Push/email notifications deferred | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features--explicitly-out-of-scope) |
+| Advanced analytics / dashboards | Not needed for MVP validation | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features---explicitly-out-of-scope) |
+| Multi-platform social API integrations | MVP uses self-reported data | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features---explicitly-out-of-scope) |
+| Legal contract generation | Requires legal review | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features---explicitly-out-of-scope) |
+| Mobile application | Web-only for MVP | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features---explicitly-out-of-scope) |
+| Rating / review system | Post-collaboration reputation is post-MVP | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features---explicitly-out-of-scope) |
+| Notification system (beyond basic) | Push/email notifications deferred | [mvp-scope.md §4](./mvp-scope.md#4-mvp-features---explicitly-out-of-scope) |
 | Collaboration Assistant agent (full) | Deferred per hackathon priority | [mvp-scope.md §5](./mvp-scope.md#5-ai-agents-in-mvp) |
 | Workflow Coordinator agent (full) | Deferred per hackathon priority | [mvp-scope.md §5](./mvp-scope.md#5-ai-agents-in-mvp) |
 

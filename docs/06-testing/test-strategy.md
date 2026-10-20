@@ -1,9 +1,11 @@
 # CollabTrust — Test Strategy
 
 > **Status:** Draft  
-> **Phase:** Phase F — Testing  
+> **Phase:** Phase 7 — Testing & Deployment  
 > **Depends on:** [`SRS.md`](../02-requirements/SRS.md), [`acceptance-criteria.md`](../02-requirements/acceptance-criteria.md), [`non-functional-requirements.md`](../02-requirements/non-functional-requirements.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
+
+> **Note:** No test infrastructure exists yet; all cases are design-stage specifications.
 
 ---
 
@@ -39,13 +41,13 @@ The testing strategy for CollabTrust is designed to validate the core marketplac
 | **API Integration** | Supertest + Vitest | >= 85% routes | HTTP endpoint request/response contracts, RBAC checks, DB queries |
 | **AI Evaluation** | Custom Vitest Runner | 100% prompts | Schema conformance, non-verdict copy linting, mock LLM fallback tests |
 | **End-to-End (E2E)** | Playwright | Key flows | Browser-level simulation of Brand and Creator core loops |
-| **Security Auditing** | npm audit / ESLint | 0 high vulns | Dependency vulnerability scanning and static code analysis |
+| **Security Auditing** | npm audit / ESLint | 0 high vulns | Linting and dependency auditing (`npm audit`) |
 
 ---
 
 ## 3. Test Environments & Isolation
 
-* **Unit & Integration:** Runs against an isolated local or CI PostgreSQL instance. Database state is reset using transactional rollbacks or Prisma schema teardowns between test runs.
+* **Unit & Integration:** Runs against an isolated local or CI PostgreSQL instance. Database state is reset using transactional rollbacks per test, or `prisma migrate reset` between suite runs.
 * **AI Mocking in CI:** Integration and regression CI suites utilize deterministic mock LLM adapters returning pre-recorded fixture responses to prevent unpredictable external API costs or network latency.
 * **Live AI Smoke Testing:** Dedicated manual and scheduled staging runs test live LLM API keys with real external inference calls.
 
@@ -53,12 +55,14 @@ The testing strategy for CollabTrust is designed to validate the core marketplac
 
 ## 4. Quality Gates for CI/CD
 
-Prior to merging any pull request to `main`:
-1. `npm run lint` — Zero ESLint errors.
-2. `npm run test:unit` — 100% passing unit tests.
-3. `npm run test:integration` — 100% passing API integration tests.
-4. `npm run test:ai-eval` — 100% passing schema and guardrail checks.
-5. `npm run build` — Clean TypeScript compilation with zero type errors.
+Prior to merging any pull request to `main` (planned scripts — no `package.json` exists yet):
+
+1. `npm run typecheck` — Zero TypeScript type errors.
+2. `npm run lint` — Zero ESLint errors.
+3. `npm audit` — Zero high-severity dependency vulnerabilities.
+4. `npm run build:api` — Clean API build.
+5. `npm run build:web` — Clean web build.
+6. `npm run test` — 100% passing unit, API integration, and AI evaluation suites.
 
 ---
 

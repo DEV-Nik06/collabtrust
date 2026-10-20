@@ -1,7 +1,7 @@
 # CollabTrust — Database Design
 
 > **Status:** Draft (Proposed)
-> **Phase:** Phase C — Architecture
+> **Phase:** Phase 4 — Architecture
 > **Depends on:** [`system-architecture.md`](./system-architecture.md), [`feature-requirements.md`](../01-product/feature-requirements.md)
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)
 
@@ -29,6 +29,7 @@ Application (1) ──── (1) CreatorProfile [applicant]
 Application (1) ──── (0..1) Collaboration [if accepted]
 Collaboration (1) ──── (0..*) Message   [communication thread]
 CreatorProfile (1) ──── (0..*) TrustSignal [AI-generated trust data]
+User (1) ──── (0..*) PasswordResetToken [password recovery]
 ```
 
 ---
@@ -45,6 +46,7 @@ The base account entity. Supports both brand and creator roles.
 | email | VARCHAR(255) | UNIQUE, NOT NULL | Login credential |
 | passwordHash | VARCHAR(255) | NOT NULL | bcrypt hash |
 | role | ENUM('brand', 'creator') | NOT NULL | Determines profile type and UI |
+| tokenVersion | INTEGER | NOT NULL, DEFAULT 0 | Incremented on logout/password change to revoke outstanding access tokens (ADR-003 amendment) |
 | createdAt | TIMESTAMP | NOT NULL, DEFAULT now() | |
 | updatedAt | TIMESTAMP | NOT NULL, auto-updated | |
 
@@ -102,6 +104,7 @@ A brand's campaign brief (AI-structured or manually created).
 | id | UUID | PK | |
 | brandId | UUID | FK → User.id, NOT NULL | The brand that created this campaign |
 | title | VARCHAR(255) | NOT NULL | |
+| category | VARCHAR(100) | NOT NULL | Industry/product category, copied from the brand's profile at publish time; powers feed filters (FR-032, AC-017.1) |
 | rawInput | TEXT | | Original free-text input |
 | goals | TEXT | | Structured by Campaign Brief Agent |
 | targetAudience | TEXT | | |
@@ -128,9 +131,12 @@ AI-generated creator-campaign match with explanation.
 | score | FLOAT | | Match relevance score (0-1) |
 | explanation | TEXT | NOT NULL | Human-readable match explanation |
 | factors | JSON | | Structured match factors |
+| criteriaHash | VARCHAR(64) | NOT NULL | Hash of the campaign criteria used to generate this match; enables the FR-047 / AC-020.5 cache (reuse cached match while hash matches current criteria) |
 | createdAt | TIMESTAMP | NOT NULL | |
 
 **Unique constraint:** (campaignId, creatorProfileId) — one match per creator per campaign.
+
+**Cache semantics (FR-047):** before invoking the Creator Matching Agent for a campaign, the service compares the current campaign criteria hash against stored `criteriaHash` values. If a complete cached match set exists with matching hashes, it is returned without an LLM call. Changing any brief field changes the hash and invalidates the cache.
 
 **Feature trace:** FEAT-020, FEAT-021.
 
@@ -202,6 +208,23 @@ AI-generated trust analysis data for a creator profile.
 
 **Feature trace:** FEAT-030.
 
+### 3.10 PasswordResetToken
+
+Single-use tokens for the self-service password reset flow (FEAT-005, FR-007 / FR-008).
+
+| Column | Type | Constraints | Notes |
+|---|---|---|---|
+| id | UUID | PK | |
+| userId | UUID | FK → User.id, NOT NULL | Account requesting the reset |
+| tokenHash | VARCHAR(255) | UNIQUE, NOT NULL | Hash of the emailed token; raw token never stored |
+| expiresAt | TIMESTAMP | NOT NULL | Issued time + 60 minutes (FR-008) |
+| usedAt | TIMESTAMP | | Set on successful password update; a used token can never be replayed |
+| createdAt | TIMESTAMP | NOT NULL | |
+
+**Lifecycle:** issuing a new reset token invalidates any outstanding token for the same user. Successful password update sets `usedAt` and immediately revokes the user's existing sessions/tokens per ADR-003 (revocation on credential change).
+
+**Feature trace:** FEAT-005.
+
 ---
 
 ## 4. Relationships Summary
@@ -224,8 +247,11 @@ AI-generated trust analysis data for a creator profile.
 | Table | Index | Reason |
 |---|---|---|
 | User | email (unique) | Login lookups |
+| User | role | Role-based access queries |
 | Campaign | brandId | List brand's campaigns |
 | Campaign | status | Filter active campaigns |
+| Campaign | category | Feed filtering by category (FR-032, AC-017.1) |
+| CreatorProfile | niche | Creator search/filtering by niche (FR-045, NFR-042) |
 | Match | campaignId | List matches for a campaign |
 | Application | campaignId | List applications for a campaign |
 | Application | creatorProfileId | List creator's applications |

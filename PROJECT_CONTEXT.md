@@ -63,7 +63,7 @@ Routes defined workflow events, retries appropriate operations, and tracks workf
 1. Campaign Brief Agent
 2. Trust Analysis Agent
 3. Creator Matching + explanation
-4. Workflow assistance
+4. Profile Insight Agent (workflow assistance deferred along with the Workflow Coordinator agent)
 
 Avoid autonomous outreach, autonomous payments, autonomous dispute resolution, or other high-impact actions in the initial MVP.
 
@@ -267,17 +267,36 @@ Completed:
 - Initial commits pushed to GitHub
 
 ### Phase 2 — Product Definition
-**Status: IN PROGRESS**
+**Status: COMPLETE**
 
-Current step:
-**2.1 Product Vision**
+All steps 2.1–2.9 delivered: product vision, problem definition, target users, personas, journeys, goals & success metrics, MVP scope, feature requirements, PRD.
 
-Product vision has been defined and should be stored in:
+### Phase 3 — Requirements
+**Status: COMPLETE (documentation)**
 
-`docs/01-product/product-vision.md`
+Functional requirements, non-functional requirements, user stories, acceptance criteria, SRS index.
 
-Next step:
-**2.2 Problem Definition**
+### Phase 4 — Architecture
+**Status: COMPLETE (documentation)**
+
+System architecture, database design, API design, security design, ADR-001 through ADR-005.
+
+### Phase 5 — AI
+**Status: COMPLETE (documentation)**
+
+AI architecture, agent specifications, prompt specifications, workflow specifications, tool permissions, safety guardrails, evaluation plan.
+
+### Phase 6 — Design
+**Status: COMPLETE (documentation)**
+
+Design system, UX flows, wireframes.
+
+### Phase 7 — Testing & Deployment
+**Status: COMPLETE (documentation)**
+
+Test strategy, test plan, test cases, CI/CD blueprint, deployment guide, environment configuration, monitoring & logging design.
+
+> All phases above are documentation-complete; **no application code, CI workflows, or infrastructure exist yet.** Implementation of the MVP begins after human review of this baseline (see §16).
 
 ## 11. Phase 2 Working Sequence
 
@@ -303,23 +322,9 @@ Next step:
 
 ## 12. Immediate Next Task
 
-Start **Phase 2.2 — Problem Definition**.
+**Human review of the documentation baseline**, then **MVP implementation (Phase 8: build)** per the roadmap: scaffold the monorepo (`apps/api`, `apps/web`, `apps/worker`), initialize Prisma from [`database-design.md`](docs/03-architecture/database-design.md), and implement in core-loop order (auth → profiles → campaigns → matching → collaboration), using [`acceptance-criteria.md`](docs/02-requirements/acceptance-criteria.md) as the test contract and [`ci-cd.md`](docs/07-deployment/ci-cd.md) as the CI blueprint.
 
-Cover:
-- Current situation for small/growing brands
-- Current situation for emerging creators
-- Pain points for each side
-- Root causes
-- Existing alternatives/workarounds
-- Weaknesses of existing approaches
-- Trust/authenticity problem
-- Marketplace cold-start problem
-- Why CollabTrust is needed
-- Problem statements
-- Jobs-to-be-done
-- Evidence and assumptions that still need validation
-
-Do not jump directly to technical implementation.
+Do not treat any documentation claim as implemented — everything under `docs/` is a design-stage specification until code lands.
 
 ## 13. Important Product Risks
 
@@ -355,14 +360,12 @@ When continuing this project:
 
 ## 16. Current Handoff
 
-**Last completed:** Phase 1 — Repository Setup
+**Last completed:** Phase 7 — Testing & Deployment (documentation)
 
-**Current phase:** Phase 2 — Product Definition
+**Current phase:** Documentation baseline complete — awaiting human review
 
-**Current task:** 2.1 Product Vision
+**Current task:** Review & approve the documentation set (see [`docs/DOCUMENTATION_STATUS.md`](docs/DOCUMENTATION_STATUS.md))
 
-**Next task:** 2.2 Problem Definition
+**Next task:** Begin MVP implementation (monorepo scaffold → Prisma schema → auth → core loop)
 
-**Do not start coding the MVP yet.**
-
-The immediate goal is to finish product and technical documentation before implementation.
+**Do not treat documentation as implementation.** No application code, CI workflows, or cloud infrastructure exist yet. Coding starts only after this baseline is approved.

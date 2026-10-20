@@ -7,8 +7,8 @@
 
 ## 1. The Two-Sided Marketplace Dynamic
 CollabTrust operates at the intersection of small/growing brands and emerging/micro creators. The marketplace provides value by closing the information and discovery gap between both parties:
-* **The Brand Dilemma:** Small brands lack marketing headcount and cannot afford enterprise tools ($1,000+/mo). They waste hours on manual Instagram/TikTok hashtag search and lack tools to assess whether follower counts reflect real engagement.
-* **The Creator Dilemma:** Emerging creators (5k–50k followers) have genuine community trust but receive a flood of spam DMs and unpaid product-gifting offers. They lack a structured marketplace to discover legitimate paying brands.
+* **The Brand Dilemma:** Small brands lack marketing headcount and cannot afford enterprise influencer marketing tools (exact pricing is an **unsourced assumption — TODO**; see the Research Gaps note in [`knowledge-base/research/README.md`](../research/README.md)). They waste hours on manual Instagram/TikTok hashtag search and lack tools to assess whether follower counts reflect real engagement.
+* **The Creator Dilemma:** Emerging creators (typically thousands to low tens of thousands of followers — per [`target-users.md` §2.2](../../docs/01-product/target-users.md)) have genuine community trust but receive a flood of spam DMs and unpaid product-gifting offers. They lack a structured marketplace to discover legitimate paying brands.
 
 ---
 

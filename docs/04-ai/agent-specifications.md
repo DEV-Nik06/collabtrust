@@ -1,7 +1,7 @@
 # CollabTrust — Agent Specifications
 
 > **Status:** Draft  
-> **Phase:** Phase D — AI Specifications  
+> **Phase:** Phase 5 — AI  
 > **Depends on:** [`ai-architecture.md`](./ai-architecture.md), [`feature-requirements.md`](../01-product/feature-requirements.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -39,8 +39,8 @@ This document specifies the operational characteristics, inputs, outputs, failur
 * **Inputs:** CreatorProfile record (display name, niche, connected platforms, self-reported metrics, bio, account age).
 * **Outputs:** Structured JSON matching `TrustAnalysisSchema`:
   * `disclaimer`: Mandatory disclaimer text.
-  * `signals`: Array of `{ signalType: string, signalValue: string, severity: 'info' | 'anomaly' }`.
-* **Critical Guardrail:** The agent is strictly prohibited from asserting definitive fraud or authenticity verdicts ("fake", "guaranteed authentic"). All outputs represent factual observations and anomaly flags.
+  * `signals`: Array of `{ signalType: string (canonical values: engagement_quality, growth_pattern, profile_completeness), signalValue: string, severity: 'info' | 'note' | 'anomaly' }`.
+* **Critical Guardrail:** The agent is strictly prohibited from asserting definitive fraud or authenticity verdicts (canonical prohibited-terminology list: [`safety-guardrails.md`](./safety-guardrails.md) §2). All outputs represent factual observations and anomaly flags, grounded in provided/self-reported data per `NFR-077`.
 * **Failure Handling:** If the agent fails, display basic profile completeness score and informational disclaimer.
 * **Human Approval Point:** The brand user reviews signals during candidate vetting; trust signals are informational only and never disqualify creators automatically.
 * **Evaluation Criteria:** Compliance with non-verdict guardrail (`AC-030.2`); perceived usefulness of observational signals by brands (`AQ-4`).
@@ -56,7 +56,7 @@ This document specifies the operational characteristics, inputs, outputs, failur
   * `creatorId`: Creator profile UUID.
   * `score`: Numerical fit score between 0.0 and 1.0.
   * `explanation`: Clear human-readable justification of why the creator fits (e.g., audience niche alignment, content format synergy).
-  * `factors`: Breakdown of niche overlap and audience fit.
+  * `factors`: Breakdown of fit scores (`nicheOverlap`, `contentStyleFit`).
 * **Failure Handling:** Returns empty match list with guidance ("No creators match criteria, try broadening requirements"); never throws fatal application errors.
 * **Human Approval Point:** The brand user reviews matches and decides whether to shortlist, wait for applications, or manually invite.
 * **Evaluation Criteria:** Helpfulness of explanation strings (`AQ-2`); brand interaction rate with suggested matches (`AQ-3`).
@@ -65,12 +65,17 @@ This document specifies the operational characteristics, inputs, outputs, failur
 
 ## 5. Agent 4: Profile Insight Agent (Priority 4 — MVP If Feasible)
 
-* **Purpose:** Generates a concise executive summary of a creator's content focus, audience alignment, and key collaboration strengths.
-* **MVP Status:** **In Scope (SHOULD-HAVE)**.
-* **Inputs:** CreatorProfile record and recent portfolio/channel highlights.
-* **Outputs:** Markdown summary highlighting audience demographic alignment and content style notes.
-* **Failure Handling:** Renders raw creator profile fields without summary.
-* **Human Approval Point:** Viewed during brand application review.
+* **Purpose:** Generates a concise, objective summary of a creator's content focus, audience alignment, and key collaboration strengths to support brand review.
+* **MVP Status:** **In Scope (SHOULD-HAVE)** — included in MVP per `FR-046` and `US-012`.
+* **Inputs:** CreatorProfile record (self-reported fields, niche, connected platforms, bio).
+* **Outputs:** Structured JSON matching `ProfileInsightSchema` (JSON-only per `NFR-070`; no Markdown — see [`prompt-specifications.md`](./prompt-specifications.md) §5, Prompt 4):
+  * `audienceAlignment`: How the creator's self-reported audience fits the requesting context (string; omitted if profile lacks audience data).
+  * `contentStyleNotes`: Observed content style, niche, and formats drawn from the profile (string; omitted if absent).
+  * `trustDisclaimer`: Mandatory informational disclaimer string (verbatim per [`safety-guardrails.md`](./safety-guardrails.md) §2).
+* **Critical Guardrail:** Grounding per `NFR-077` — every field derives strictly from provided/self-reported profile data; the agent never infers metrics not present in the input, and omits fields when data is absent.
+* **Failure Handling:** On timeout or schema-validation failure, render raw creator profile fields with an "Insight unavailable" notice (see [`workflow-specifications.md`](./workflow-specifications.md) Workflow 4).
+* **Human Approval Point:** None required — the agent is read-only and produces no state changes or outbound actions. Insights are viewed during brand application review and never auto-approve or disqualify creators.
+* **Evaluation Criteria:** Concise summary rendered (`AC-023.1`); schema conformance (`NFR-070`); groundedness of all fields (`NFR-077`).
 
 ---
 
@@ -90,7 +95,18 @@ This document specifies the operational characteristics, inputs, outputs, failur
 
 ---
 
-## 8. Related Documents
+## 8. Deferred (Post-MVP) Agents
+
+Agents 5 and 6 are fully deferred from the MVP per [`mvp-scope.md`](../01-product/mvp-scope.md) §5 (Deferred Features for MVP):
+
+| Agent | Deferred Capability | MVP Substitute |
+|---|---|---|
+| Agent 5: Collaboration Assistant | Outreach & drafting — milestone checklists, deliverable requirements documents, and brand-creator communication templates | Simple milestone tracking and manual text messaging |
+| Agent 6: Workflow Coordinator | Workflow automation — multi-step event triggers, deadline tracking, reminder notifications, and retry pipelines | Direct user button interactions driving workflow state transitions |
+
+---
+
+## 9. Related Documents
 
 | Document | Purpose |
 |---|---|

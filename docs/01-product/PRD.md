@@ -69,13 +69,14 @@ Collaboration begins → Campaign completes
 | Category | MUST-HAVE | SHOULD-HAVE | NICE-TO-HAVE |
 |---|---|---|---|
 | Authentication & Profiles | 4 | 1 | — |
-| Campaigns | 4 | 2 | — |
-| AI Agents | 4 | 1 | 2 |
-| Matching & Discovery | 3 | 1 | — |
-| Trust & Analysis | 2 | 1 | — |
-| Collaboration Workflow | 3 | 1 | — |
+| Campaign Lifecycle & Structuring | 6 | 2 | — |
+| Creator Discovery & Matching (incl. Creator Matching & Profile Insight agents) | 2 | 2 | — |
+| Trust Analysis & Signals (incl. Trust Analysis agent) | 2 | 1 | — |
+| Collaboration Workflow | 4 | 1 | — |
 | Dashboard & Navigation | 1 | 2 | — |
-| **Totals** | **21** | **9** | **2** |
+| **Totals** | **19** | **9** | **0** |
+
+> AI agents are counted within their product domain (each feature counted exactly once), matching the 28-feature catalog in [`feature-requirements.md`](./feature-requirements.md).
 
 ### AI Agents in MVP
 

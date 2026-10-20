@@ -28,7 +28,7 @@ These journeys focus on **what happens**, not on visual design or UI layout (tha
 
 ## 3. J-1: Brand Campaign Journey
 
-**Persona:** Priya Sharma — Small brand founder (see [personas.md §3.1](./personas.md#31-priya-sharma--small-brand-founder))
+**Persona:** Priya Sharma — Small brand founder (see [personas.md §3.1](./personas.md#31-priya-sharma---small-brand-founder))
 
 **Description:** A small brand founder creates a campaign, gets AI assistance to structure it, discovers matching creators, reviews their profiles and trust signals, selects creators, and manages the collaboration to completion.
 
@@ -47,7 +47,7 @@ These journeys focus on **what happens**, not on visual design or UI layout (tha
 | 5 | Publishes the campaign. | Campaign status changes to Active. Creator Matching Agent is triggered. | — |
 | 6 | Views matched creators with match explanations. | A list of matched creators is displayed, each with a match score/rank and a human-readable explanation of why they fit. | **Creator Matching Agent** |
 | 7 | Clicks on a matched creator's profile. | Creator profile is displayed with a profile summary. | **Profile Insight Agent** |
-| 8 | Views trust signals for the creator. | Trust signal summary is displayed: engagement patterns, profile completeness, account age, potential anomalies. Signals are presented as evidence, not verdicts. | **Trust Analysis Agent** |
+| 8 | Views trust signals for the creator. | Trust signal summary is displayed: self-reported engagement and follower figures, profile completeness, account age, potential anomalies. All signals are derived from the creator's self-reported profile data (no live platform integration); signals are presented as evidence, not verdicts. | **Trust Analysis Agent** |
 | 9 | Receives creator applications. | Applications appear in the campaign dashboard. | — |
 | 10 | Reviews applications against match explanations, trust signals, and profile summaries. | Application details and creator information are accessible from the campaign view. | — |
 | 11 | Selects a creator for collaboration. | Collaboration status is created (Invited → Accepted). | — |
@@ -69,7 +69,7 @@ These journeys focus on **what happens**, not on visual design or UI layout (tha
 
 ## 4. J-2: Creator Discovery Journey
 
-**Persona:** Maya Torres — Emerging/micro creator (see [personas.md §3.4](./personas.md#34-maya-torres--emerging--micro-creator))
+**Persona:** Maya Torres — Emerging/micro creator (see [personas.md §3.4](./personas.md#34-maya-torres---emerging--micro-creator))
 
 **Description:** An emerging creator registers, creates a profile, discovers available campaigns, evaluates opportunities, and applies to a relevant campaign.
 
@@ -107,7 +107,7 @@ These journeys focus on **what happens**, not on visual design or UI layout (tha
 
 ## 5. J-3: Brand Evaluating Trust Signals
 
-**Persona:** Daniel Okafor — Growing brand marketing manager (see [personas.md §3.2](./personas.md#32-daniel-okafor--growing-brand-marketing-manager))
+**Persona:** Daniel Okafor — Growing brand marketing manager (see [personas.md §3.2](./personas.md#32-daniel-okafor---growing-brand-marketing-manager))
 
 **Description:** A focused sub-journey showing how a brand user evaluates a creator's trustworthiness using the Trust Analysis Agent output.
 
@@ -121,9 +121,9 @@ These journeys focus on **what happens**, not on visual design or UI layout (tha
 |---|---|---|---|
 | 1 | Views a matched creator's profile from the campaign dashboard. | Creator profile is displayed with profile summary. | **Profile Insight Agent** |
 | 2 | Clicks to view trust signals. | Trust Analysis Agent output is displayed as a structured summary. | **Trust Analysis Agent** |
-| 3 | Reviews engagement quality signals. | System shows indicators such as engagement rate patterns, comment quality signals, follower growth trajectory. | — |
+| 3 | Reviews engagement quality signals. | System shows indicators derived from the creator's self-reported profile data, such as self-reported engagement figures versus stated audience size and self-reported follower history (not live platform analytics). | - |
 | 4 | Reviews profile completeness and consistency signals. | System shows indicators such as profile completeness, content posting consistency, account age. | — |
-| 5 | Sees any flagged anomalies with explanations. | Potential anomalies are listed with explanations of what was observed (e.g., "Rapid follower increase in short period"). Presented as observations, not verdicts. | — |
+| 5 | Sees any flagged anomalies with explanations. | Potential anomalies are listed with explanations of what was observed (e.g., "Self-reported follower count changed sharply between profile updates"). Presented as observations, not verdicts. | - |
 | 6 | Makes an informed selection decision. | Daniel uses the trust signals alongside match explanations and profile data to decide whether to select this creator. The decision is his — the system does not make it for him. | — |
 
 **Post-conditions:**
@@ -139,7 +139,7 @@ These journeys focus on **what happens**, not on visual design or UI layout (tha
 
 ## 6. J-4: Creator Evaluating a Brand Opportunity
 
-**Persona:** Jordan Ellis — Mid-tier creator (see [personas.md §3.5](./personas.md#35-jordan-ellis--mid-tier-creator))
+**Persona:** Jordan Ellis — Mid-tier creator (see [personas.md §3.5](./personas.md#35-jordan-ellis---mid-tier-creator))
 
 **Description:** A creator evaluates whether a brand opportunity is worth pursuing by reviewing campaign details and brand-side trust signals.
 

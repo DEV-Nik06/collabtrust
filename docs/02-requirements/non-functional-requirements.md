@@ -1,7 +1,7 @@
 # CollabTrust — Non-Functional Requirements
 
 > **Status:** Draft  
-> **Phase:** 3.3 — Non-Functional Requirements  
+> **Phase:** Phase 3 — Requirements  
 > **Depends on:** [`product-vision.md`](../01-product/product-vision.md), [`mvp-scope.md`](../01-product/mvp-scope.md), [`feature-requirements.md`](../01-product/feature-requirements.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -14,9 +14,9 @@ This document specifies the Non-Functional Requirements (NFRs) for the CollabTru
 In alignment with the [Product Vision](../01-product/product-vision.md) and [MVP Scope](../01-product/mvp-scope.md), CollabTrust is an AI-assisted marketplace where humans retain control over critical decisions. Trust analysis surfaces observational signals rather than fraud guarantees, and AI workflows assist rather than act autonomously.
 
 ### Scope & Phase Context
-* **Current Phase:** Phase B — Engineering Requirements (MVP Definition).
+* **Current Phase:** Phase 3 — Requirements (MVP Definition).
 * **Target Environment:** Development, local testing, and single-instance cloud deployment for MVP validation. Production-scale high availability, distributed caching, and multi-region resilience are explicitly deferred post-MVP.
-* **Traceability:** Requirements map to product principles in [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md) and technical directions established in [product-vision.md §10](../01-product/product-vision.md#10-proposed-technical-direction).
+* **Traceability:** Requirements map to product principles in [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md) and technical directions established in [PROJECT_CONTEXT.md §7 (Proposed Technical Direction)](../../PROJECT_CONTEXT.md#7-proposed-technical-direction).
 
 ### Convention & Priority Definitions
 * **Requirement ID Format:** `NFR-XXX` (stable sequential identifier).
@@ -69,15 +69,15 @@ Security controls must guarantee identity verification, prevent data tampering b
 
 | ID | Specification ("The system shall...") | Priority | Target Metric | Status | Notes / Rationale |
 |---|---|:---:|---|:---:|---|
-| **NFR-010** | The system shall authenticate user identities using cryptographically secure tokens or session cookies with strict expiry. | **MUST-HAVE** | Token expiry: `24 hours` (access token); `7 days` (refresh) | Confirmed | Session persistence per FEAT-002 and journey flows. |
+| **NFR-010** | The system shall authenticate user identities using cryptographically secure tokens or session cookies with strict expiry. | **MUST-HAVE** | Token expiry: `15 minutes` (access token); `7 days` (refresh) | Confirmed | Session persistence per FEAT-002 and journey flows. Immediate revocation on logout/password change is enforced via short access-token TTL + server-side `tokenVersion` check (see ADR-003 amendment and [`security-design.md` §2.2](../03-architecture/security-design.md)). Configurable via `JWT_EXPIRY` / `JWT_REFRESH_EXPIRY` (see [`environment-configuration.md`](../07-deployment/environment-configuration.md)). |
 | **NFR-011** | The system shall hash user passwords using modern adaptive one-way hashing algorithms prior to storage. | **MUST-HAVE** | `bcrypt` (salt rounds >= 12) or `argon2id` | Confirmed | Plaintext or reversible password storage is strictly forbidden. |
 | **NFR-012** | The backend API shall enforce server-side Role-Based Access Control (RBAC) on every non-public endpoint. | **MUST-HAVE** | `100%` endpoints protected; zero privilege escalation | Confirmed | Brands cannot edit creator profiles; creators cannot edit campaigns or review unsubmitted brand briefs. |
 | **NFR-013** | The system shall mandate Transport Layer Security (TLS/HTTPS) for all network traffic. | **MUST-HAVE** | TLS 1.2 minimum; TLS 1.3 preferred; HSTS enabled | Confirmed | Protects credentials and communication in transit across public networks. |
 | **NFR-014** | The system shall validate and sanitize all inbound client payloads against strict backend schema definitions. | **MUST-HAVE** | Strict input schema validation (e.g., Zod); `100%` payload coverage | Confirmed | Blocks SQL injection, NoSQL injection, and Cross-Site Scripting (XSS) in free-text fields. |
 | **NFR-015** | The system shall prohibit hardcoded secrets, API tokens, database connection strings, or LLM credentials in source code. | **MUST-HAVE** | `0` committed secrets; automated secret detection | Confirmed | Enforced via `.env` files, environment injection, and `.gitignore` governance. |
 | **NFR-016** | The system shall immediately invalidate session tokens upon user logout or password change. | **MUST-HAVE** | Immediate revocation (`< 100 ms`) | Confirmed | Prevents replay attacks from shared devices or public computers. |
-| **NFR-017** | The system shall suppress internal error stack traces, database schema definitions, and vendor logs in client API error responses. | **MUST-HAVE** | `0` raw stack traces exposed to client | Confirmed | Returns standardized error envelope `{ code, message, requestId }`. |
-| **NFR-018** | The system shall rate-limit public authentication endpoints to mitigate automated brute-force attacks. | **SHOULD-HAVE** | Max `5` failed attempts per IP / account per `15 minutes` | Proposed | Applied to `/api/auth/login` and `/api/auth/reset-password`. |
+| **NFR-017** | The system shall suppress internal error stack traces, database schema definitions, and vendor logs in client API error responses. | **MUST-HAVE** | `0` raw stack traces exposed to client | Confirmed | Returns standardized error envelope `{ code, message, requestId, details }` (canonical shape defined in [`api-design.md` §2](../03-architecture/api-design.md)). |
+| **NFR-018** | The system shall rate-limit public authentication endpoints to mitigate automated brute-force attacks. | **SHOULD-HAVE** | Max `5` failed attempts per IP / account per `15 minutes` | Proposed | Applied to `/api/v1/auth/login`, `/api/v1/auth/forgot-password`, and `/api/v1/auth/reset-password`. |
 
 ---
 
@@ -88,7 +88,7 @@ The MVP represents an evaluative platform. A high-resilience 99.99% multi-cloud 
 | ID | Specification ("The system shall...") | Priority | Target Metric | Status | Notes / Rationale |
 |---|---|:---:|---|:---:|---|
 | **NFR-020** | The platform shall maintain service availability during core MVP testing and demonstration windows. | **MUST-HAVE** | `95.0%` uptime for MVP stage | Proposed | Sufficient for hackathon demonstration and initial user testing cycles. |
-| **NFR-021** | The system shall provide deterministic fallback pathways when upstream LLM APIs fail, time out, or exceed rate limits. | **MUST-HAVE** | `100%` agent endpoints possess fallback logic | Confirmed | Example: Fallback to manual campaign form if Campaign Brief Agent fails (AC-011.4). |
+| **NFR-021** | The system shall provide deterministic fallback pathways when upstream LLM APIs fail, time out, or exceed rate limits. | **MUST-HAVE** | `100%` agent endpoints possess fallback logic | Confirmed | Example: Fallback to manual campaign form if Campaign Brief Agent fails (AC-011.3). |
 | **NFR-022** | The database system shall perform automated daily backups with verifiable point-in-time recovery. | **MUST-HAVE** | Recovery Point Objective (RPO) `< 24 hours`; Recovery Time Objective (RTO) `< 2 hours` | Proposed | Safeguards seed datasets, user profiles, and campaign history during testing. |
 | **NFR-023** | The system shall capture structured server errors with operational context (correlation ID, timestamp, route) without logging PII. | **MUST-HAVE** | `100%` 5xx exceptions logged with Correlation ID | Confirmed | Enables rapid debugging without exposing sensitive creator or brand info in log drains. |
 | **NFR-024** | The system shall retry transient upstream AI failures automatically before declaring request failure. | **MUST-HAVE** | `1-2` retries with exponential backoff (jitter) | Proposed | Mitigates transient network blips and momentary rate limiting from LLM providers. |
@@ -151,7 +151,7 @@ CollabTrust handles creator profiles and brand campaign budgets. The system must
 | **NFR-062** | The application shall validate all incoming data models at boundary layers using strongly typed schemas. | **MUST-HAVE** | Zod validation on API inputs and LLM structured outputs | Confirmed | Guarantees corrupt or unexpected payloads are rejected before database persistence. |
 | **NFR-063** | The database shall provide reproducible seed scripts for demo and automated testing environments. | **MUST-HAVE** | `prisma db seed` executable with realistic test personas | Confirmed | Populates Priya, Daniel, Maya, Jordan test fixtures consistently. |
 | **NFR-064** | The system shall support user account deletion and associated data removal upon request. | **MUST-HAVE** | Soft or hard deletion completing within 1 business day | Proposed | Ensures compliance with user data removal requests. |
-| **NFR-065** | The system shall prohibit logging or storing raw payment card details or banking credentials. | **SHOULD-HAVE** | `0` financial data collected; payment processing out of scope | Confirmed | Enforces boundary: payments are explicitly out of MVP scope ([mvp-scope.md §4](../01-product/mvp-scope.md#4-mvp-features--explicitly-out-of-scope)). |
+| **NFR-065** | The system shall prohibit logging or storing raw payment card details or banking credentials. | **SHOULD-HAVE** | `0` financial data collected; payment processing out of scope | Confirmed | Enforces boundary: payments are explicitly out of MVP scope ([mvp-scope.md §4](../01-product/mvp-scope.md#4-mvp-features---explicitly-out-of-scope)). |
 
 ---
 

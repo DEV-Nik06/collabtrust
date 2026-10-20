@@ -17,6 +17,14 @@ CollabTrust needs a secure, lightweight authentication mechanism for brand and c
 
 We propose **JSON Web Tokens (JWT) signed via HMAC-SHA256 (`HS256`)**, issued upon successful email/password authentication (passwords hashed via `bcrypt` >= 12 rounds). Tokens will be stored in client browsers using **`httpOnly`, `Secure`, `SameSite=Lax` cookies**. The API will also accept `Authorization: Bearer <token>` headers to facilitate automated integration testing.
 
+### Token model (amended 2026-10-20)
+
+* **Access token:** 15-minute TTL (`JWT_EXPIRY`), carries a `tokenVersion` claim.
+* **Refresh token:** 7-day TTL (`JWT_REFRESH_EXPIRY`), used to obtain new access tokens.
+* **Revocation:** the user record stores a `tokenVersion` counter; logout and password change increment it. Sensitive routes (password change, account deletion, campaign publication, application acceptance) verify the claim server-side, rejecting stale tokens immediately — satisfying FR-005 / NFR-016 (MUST, immediate revocation) without a per-request denylist.
+
+> This amendment resolves the earlier conflict where this ADR declined instant revocation while FR-005 / NFR-016 required it.
+
 ---
 
 ## 3. Rationale
@@ -31,4 +39,4 @@ We propose **JSON Web Tokens (JWT) signed via HMAC-SHA256 (`HS256`)**, issued up
 ## 4. Consequences & Trade-offs
 
 * **Positive:** Stateless verification keeps API endpoints fast; zero external infrastructure dependencies for auth; strong baseline security.
-* **Negative:** Token revocation before expiration (24h) requires a token denylist table if instant invalidation is needed. For MVP, standard token expiration and client-side cookie deletion on logout is sufficient.
+* **Negative:** Revocation relies on a `tokenVersion` claim checked on sensitive routes rather than on every request — a revoked access token remains technically valid for low-sensitivity reads until its 15-minute expiry. The 15-minute TTL bounds this exposure; refresh tokens are invalidated on password change, so a revoked user cannot mint new access tokens.

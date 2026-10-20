@@ -1,7 +1,7 @@
 # CollabTrust — Functional Requirements
 
 > **Status:** Draft  
-> **Phase:** Phase B — Engineering Requirements  
+> **Phase:** Phase 3 — Requirements  
 > **Depends on:** [`PRD.md`](../01-product/PRD.md), [`feature-requirements.md`](../01-product/feature-requirements.md), [`mvp-scope.md`](../01-product/mvp-scope.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -10,6 +10,9 @@
 ## 1. Overview
 
 This document specifies the complete set of Functional Requirements (FR) for the CollabTrust platform. Functional requirements define the precise behavioral and operational capabilities of the software, tracing directly to feature specifications (`FEAT-XXX`) from [`feature-requirements.md`](../01-product/feature-requirements.md).
+
+> [!NOTE]
+> **ID Numbering:** Requirement IDs are **non-contiguous by design**. Gaps between category ranges (e.g., no FR-009, FR-019, FR-033–FR-039) are intentionally reserved for future requirements within each category. Do not assume a missing ID indicates a deleted or missing requirement.
 
 ### Core Marketplace Problems Solved
 1. **Brands:** Cannot easily discover relevant creators within limited budgets, nor evaluate authenticity and fit.
@@ -27,12 +30,12 @@ This document specifies the complete set of Functional Requirements (FR) for the
 |---|---|---|:---:|:---:|:---:|:---:|
 | 1. Authentication & User Management | FR-001 – FR-008 | FEAT-001, FEAT-002, FEAT-005 | 8 | 6 | 2 | 0 |
 | 2. Profile Management | FR-010 – FR-018 | FEAT-003, FEAT-004 | 9 | 7 | 2 | 0 |
-| 3. Campaign Lifecycle & Structuring | FR-020 – FR-032 | FEAT-010 – FEAT-017 | 13 | 9 | 4 | 0 |
+| 3. Campaign Lifecycle & Structuring | FR-020 – FR-032 | FEAT-010 – FEAT-017 | 13 | 11 | 2 | 0 |
 | 4. Creator Discovery & Matching | FR-040 – FR-048 | FEAT-020 – FEAT-023 | 9 | 6 | 3 | 0 |
 | 5. Trust Analysis & Signal Governance | FR-050 – FR-056 | FEAT-030 – FEAT-032 | 7 | 5 | 2 | 0 |
-| 6. Collaboration Workflow | FR-060 – FR-068 | FEAT-040 – FEAT-044 | 9 | 7 | 2 | 0 |
-| 7. Dashboard & Navigation | FR-070 – FR-076 | FEAT-050 – FEAT-052 | 7 | 4 | 3 | 0 |
-| **Total** | | | **62** | **44** | **18** | **0** |
+| 6. Collaboration Workflow | FR-060 – FR-068 | FEAT-040 – FEAT-044 | 9 | 8 | 1 | 0 |
+| 7. Dashboard & Navigation | FR-070 – FR-076 | FEAT-050 – FEAT-052 | 7 | 2 | 5 | 0 |
+| **Total** | | | **62** | **45** | **17** | **0** |
 
 ---
 
@@ -74,7 +77,7 @@ This document specifies the complete set of Functional Requirements (FR) for the
 | ID | Requirement Specification | Feature Trace | Priority | Notes / Rationale |
 |---|---|:---:|:---:|---|
 | **FR-020** | The system shall provide brand users with a free-text input interface to describe campaign concepts, goals, and constraints. | FEAT-010 | **MUST-HAVE** | Lowers barrier for small brands. |
-| **FR-021** | The system shall submit raw campaign text to the Campaign Brief Agent and receive a structured JSON brief (title, target audience, deliverables, timeline, budget, requirements). | FEAT-011 | **MUST-HAVE** | Priority 1 AI Agent. |
+| **FR-021** | The system shall submit raw campaign text to the Campaign Brief Agent and receive a structured JSON brief containing all brief fields: title, goals, target audience, deliverables, timeline, budget, and requirements. | FEAT-011 | **MUST-HAVE** | Priority 1 AI Agent. |
 | **FR-022** | The system shall populate an editable campaign draft form using the Campaign Brief Agent's structured output. | FEAT-011, FEAT-012 | **MUST-HAVE** | Human-in-the-loop validation. |
 | **FR-023** | The system shall provide a manual form fallback for campaign creation if the Campaign Brief Agent fails or encounters network errors. | FEAT-011 | **MUST-HAVE** | Graceful degradation (`NFR-022`). |
 | **FR-024** | The system shall allow brand users to edit any field in the generated campaign brief prior to publication. | FEAT-012 | **MUST-HAVE** | Human retains control over brief content. |
@@ -110,7 +113,7 @@ This document specifies the complete set of Functional Requirements (FR) for the
 | ID | Requirement Specification | Feature Trace | Priority | Notes / Rationale |
 |---|---|:---:|:---:|---|
 | **FR-050** | The system shall invoke the Trust Analysis Agent to evaluate public/self-reported profile data and produce structured trust signals (completeness, consistency, anomaly flags). | FEAT-030 | **MUST-HAVE** | Priority 2 AI Agent. |
-| **FR-051** | The system shall present trust evaluation output strictly as observational signals and evidence, prohibiting definitive "fraud", "fake", or "guaranteed authentic" classifications. | FEAT-030, FEAT-032 | **MUST-HAVE** | Guardrail: Evidence over claims. |
+| **FR-051** | The system shall present trust evaluation output strictly as observational signals and evidence, prohibiting definitive "fraud", "fake", or "guaranteed authentic" classifications (full prohibited-terminology list: [`safety-guardrails.md` § 2](../04-ai/safety-guardrails.md) — the canonical source). | FEAT-030, FEAT-032 | **MUST-HAVE** | Guardrail: Evidence over claims. |
 | **FR-052** | The system shall render a persistent disclaimer on all trust analysis UI panels stating that signals are informational observations and do not guarantee authenticity or fraud detection. | FEAT-032 | **MUST-HAVE** | Legal and ethical compliance. |
 | **FR-053** | The system shall categorize trust signals into neutral observational categories (e.g., `Profile Completeness`, `Audience Metric Consistency`, `Historical Activity`). | FEAT-030 | **MUST-HAVE** | Transparent UI structuring. |
 | **FR-054** | The system shall display brand trust indicators to creators (account age, profile completeness, completed collaboration count). | FEAT-031 | **SHOULD-HAVE** | Two-way trust symmetry. |
@@ -127,7 +130,7 @@ This document specifies the complete set of Functional Requirements (FR) for the
 | **FR-061** | The system shall prevent creators from submitting multiple active applications to the same campaign. | FEAT-040 | **MUST-HAVE** | Idempotency and anti-spam rule. |
 | **FR-062** | The system shall present submitted applications in the brand's campaign management console, alongside match explanations and trust signals. | FEAT-041 | **MUST-HAVE** | Integrated review workflow. |
 | **FR-063** | The system shall require explicit brand user action to accept or decline creator applications, initiating a collaboration upon acceptance. | FEAT-041 | **MUST-HAVE** | Human decision gate. |
-| **FR-064** | The system shall create a `Collaboration` entity with status `invited` or `accepted` when a brand approves an application. | FEAT-041, FEAT-042 | **MUST-HAVE** | State machine transition. |
+| **FR-064** | The system shall create a `Collaboration` entity with initial status `invited` when a brand approves a creator application. The creator's explicit acknowledgement shall transition the status to `accepted`. | FEAT-041, FEAT-042 | **MUST-HAVE** | State machine: brand approval → `invited`; creator confirmation → `accepted`. |
 | **FR-065** | The system shall track collaboration state across defined lifecycle stages: `invited` -> `accepted` -> `in_progress` -> `completed`. | FEAT-042 | **MUST-HAVE** | Core workflow tracking. |
 | **FR-066** | The system shall provide an in-platform chronological communication thread for active collaborations between brand and selected creator. | FEAT-043 | **SHOULD-HAVE** | Replaces fragmented DMs/email. |
 | **FR-067** | The system shall allow either collaboration participant to mark deliverables delivered and request completion confirmation. | FEAT-044 | **MUST-HAVE** | Milestone closing. |
@@ -139,8 +142,8 @@ This document specifies the complete set of Functional Requirements (FR) for the
 
 | ID | Requirement Specification | Feature Trace | Priority | Notes / Rationale |
 |---|---|:---:|:---:|---|
-| **FR-070** | The system shall render a Brand Dashboard displaying active campaigns, pending creator applications, matched recommendations, and active collaborations. | FEAT-050 | **MUST-HAVE** | Primary brand hub. |
-| **FR-071** | The system shall render a Creator Dashboard displaying matched opportunities, submitted application statuses, and active collaborations. | FEAT-051 | **MUST-HAVE** | Primary creator hub. |
+| **FR-070** | The system shall render a Brand Dashboard displaying active campaigns, pending creator applications, matched recommendations, and active collaborations. | FEAT-050 | **SHOULD-HAVE** | Primary brand hub. |
+| **FR-071** | The system shall render a Creator Dashboard displaying matched opportunities, submitted application statuses, and active collaborations. | FEAT-051 | **SHOULD-HAVE** | Primary creator hub. |
 | **FR-072** | The system shall provide role-aware top-level navigation that dynamically adapts menu links and actionable shortcuts to the user's role. | FEAT-052 | **MUST-HAVE** | Role-tailored UX. |
 | **FR-073** | The system shall display unread activity badges on applications and collaboration messages in navigation bars. | FEAT-050, FEAT-051 | **SHOULD-HAVE** | Activity awareness. |
 | **FR-074** | The system shall provide breadcrumbs and clear back-navigation across hierarchical campaign and profile views. | FEAT-052 | **SHOULD-HAVE** | Usability standard. |

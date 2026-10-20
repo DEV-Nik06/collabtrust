@@ -1,7 +1,7 @@
 # CollabTrust — AI Architecture
 
 > **Status:** Draft (Proposed)  
-> **Phase:** Phase D — AI Specifications  
+> **Phase:** Phase 5 — AI  
 > **Depends on:** [`system-architecture.md`](../03-architecture/system-architecture.md), [`ADR-004-ai-architecture.md`](../03-architecture/ADR/ADR-004-ai-architecture.md), [`mvp-scope.md`](../01-product/mvp-scope.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -30,7 +30,7 @@ The AI subsystem operates as an integrated service layer within the Express API 
 │                    AI Orchestration Layer                   │
 │                                                             │
 │  ┌───────────────────────┐       ┌───────────────────────┐  │
-│  │ Campaign Brief Agent  │       │ Creator Match Agent   │  │
+│  │ Campaign Brief Agent  │       │ Creator Matching Agent │  │
 │  └──────────┬────────────┘       └──────────┬────────────┘  │
 │  ┌──────────▼────────────┐       ┌──────────▼────────────┐  │
 │  │ Trust Analysis Agent  │       │ Profile Insight Agent │  │
@@ -55,6 +55,8 @@ The AI subsystem operates as an integrated service layer within the Express API 
                        └─────────────┘
 ```
 
+> **Figure:** The AI orchestration layer — MVP agents only. Deferred agents (Collaboration Assistant, Workflow Coordinator) are omitted from this diagram; see [`agent-specifications.md`](./agent-specifications.md).
+
 ---
 
 ## 3. Planned AI Agents Catalog
@@ -74,7 +76,7 @@ The AI subsystem operates as an integrated service layer within the Express API 
 
 1. **Input Sanitization:** User text is cleansed and wrapped in XML tags (`<user_input>`) to prevent prompt injection.
 2. **Template Composition:** System instructions, developer guardrails, input data, and schema formatting instructions are combined.
-3. **Inference Execution:** Sent via HTTP client to the LLM endpoint with a 30s timeout and single-retry backoff.
+3. **Inference Execution:** Sent via HTTP client to the LLM endpoint with a 30s timeout; 1 retry; exponential backoff with jitter (`NFR-024`).
 4. **Schema Validation:** Raw output is parsed as JSON and validated against strict Zod schemas.
 5. **Post-Processing & Filtering:** Text is verified against blacklist filters (e.g., stripping definitive fraud guarantees).
 6. **Graceful Fallback:** If inference fails, the system invokes deterministic fallbacks (e.g., manual form entry).

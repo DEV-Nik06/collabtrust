@@ -68,6 +68,8 @@ Important product and technical decisions must be documented.
 
 If implementation changes a documented requirement, architecture decision, API contract, database design, or AI-agent behavior, update the relevant documentation.
 
+This repository is **documentation-first**: until the build phase begins, most contributions are documentation changes. [`acceptance-criteria.md`](docs/02-requirements/acceptance-criteria.md) is the single source of truth for acceptance criteria; do not define criteria anywhere else.
+
 ## Security
 
 Never commit:
@@ -85,9 +87,8 @@ Use `.env.example` to document required environment variables.
 
 Before opening a Pull Request:
 
-* Ensure the application builds successfully.
-* Run relevant tests.
-* Remove debugging code.
+* **Once application code exists:** ensure the project builds (`npm run build:api` / `npm run build:web`), run the test suites, and remove debugging code. *(No `package.json` or build system exists yet — these gates activate when the build phase begins.)*
+* For documentation-only changes: verify internal links resolve and requirement IDs (`FR-`, `NFR-`, `AC-`, `US-`, `FEAT-`) referenced in your change exist in their canonical documents.
 * Avoid unnecessary dependencies.
 * Keep functions and modules focused.
 * Update documentation when required.

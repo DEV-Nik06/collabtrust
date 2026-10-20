@@ -1,7 +1,7 @@
 # CollabTrust — UI Wireframes Blueprint
 
 > **Status:** Draft (Structural Blueprints)  
-> **Phase:** Phase E — Design  
+> **Phase:** Phase 6 — Design  
 > **Depends on:** [`ux-flows.md`](../ux-flows.md), [`design-system.md`](../design-system.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../../PROJECT_CONTEXT.md)  
 
@@ -57,7 +57,7 @@
 │                                                                        │
 │  ┌──────────────────────────────────────────────────────────────────┐  │
 │  │ Maya Torres  •  @mayagreen (Instagram)                           │  │
-│  │ Niche: Sustainable Living  •  Audience: 8.5k                     │  │
+│  │ Niche: Sustainable Living  •  Audience: 8.5k (self-reported)     │  │
 │  │ Match Score: 88% Match                                           │  │
 │  │                                                                  │  │
 │  │ 💡 AI Match Explanation:                                         │  │
@@ -68,12 +68,16 @@
 │  │ [ℹ️ Profile Complete] [ℹ️ Consistent Engagement] [⚠️ Spike Note] │  │
 │  │                                                                  │  │
 │  │ ℹ️ Disclaimer: Informational observations only. CollabTrust       │  │
-│  │ surfaces signals and evidence, not fraud guarantees.             │  │
+│  │ surfaces signals and evidence, not fraud guarantees or           │  │
+│  │ definitive authenticity verdicts.                                │  │
 │  │                                                                  │  │
-│  │ [ View Full Profile ]                      [ Invite to Campaign ] │  │
+│  │ [ View Full Profile ]                    [ Accept Collaboration ] │  │
 │  └──────────────────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────────────────┘
 ```
+
+> [!NOTE]
+> The primary action button uses the accept/select terminology defined in [`FEAT-041`](../../01-product/feature-requirements.md) (Brand Reviews and Selects Creators). Accepting initializes the collaboration in "Invited" status per [`FEAT-042`](../../01-product/feature-requirements.md); there is no separate "invite" action in MVP scope.
 
 ---
 
@@ -127,6 +131,9 @@
 │  [ Confirm All Deliverables Completed ]                                │
 └────────────────────────────────────────────────────────────────────────┘
 ```
+
+> [!NOTE]
+> **FEAT coverage:** The status stepper maps to [`FEAT-042`](../../01-product/feature-requirements.md) (Collaboration Status Tracking, MUST-HAVE), the message pane to [`FEAT-043`](../../01-product/feature-requirements.md) (Basic Messaging, SHOULD-HAVE), and "Confirm All Deliverables Completed" to [`FEAT-044`](../../01-product/feature-requirements.md) (Collaboration Completion, MUST-HAVE). The **Deliverables Checklist** and **"Submit Deliverable Link"** controls are **Deferred (post-MVP) — not in MVP scope**: no corresponding FEAT exists, and the collaboration checklist is NICE-TO-HAVE/deferred per [`mvp-scope.md` §3.5](../../01-product/mvp-scope.md).
 
 ---
 

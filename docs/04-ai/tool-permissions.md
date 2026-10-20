@@ -1,7 +1,7 @@
 # CollabTrust — AI Tool Permissions & Access Scopes
 
 > **Status:** Draft  
-> **Phase:** Phase D — AI Specifications  
+> **Phase:** Phase 5 — AI  
 > **Depends on:** [`agent-specifications.md`](./agent-specifications.md), [`security-design.md`](../03-architecture/security-design.md)  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)  
 
@@ -9,7 +9,7 @@
 
 ## 1. Principle of Least Privilege for AI Agents
 
-CollabTrust enforces strict sandboxing across all AI agents. Because the platform operates on the core principle of **"AI recommends, humans decide,"** AI agents are designed as pure analytical functions (Text In -> Structured Data Out) rather than autonomous actors equipped with system tools.
+CollabTrust enforces strict sandboxing across all AI agents. Because the platform operates on the core principle of **"AI recommends, humans decide,"** AI agents are designed as analytical functions (Text In -> Structured Data Out) rather than autonomous actors equipped with system tools. Agents may *propose* state changes (e.g., the deferred Workflow Coordinator suggesting a workflow transition), but every proposal is validated and applied exclusively by backend TypeScript service code after server-side validation — agents can never mutate state directly.
 
 ---
 
@@ -17,12 +17,14 @@ CollabTrust enforces strict sandboxing across all AI agents. Because the platfor
 
 | Agent Name | Database Read Access | Database Write Access | External Network / Web Access | Email / Messaging Access | Payment / Financial Tools |
 |---|:---:|:---:|:---:|:---:|:---:|
-| **Campaign Brief Agent** | None (Payload only) | None (Returns to API) | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
-| **Creator Matching Agent** | Read CreatorProfiles | None (Returns to API) | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
-| **Trust Analysis Agent** | Read CreatorProfile | None (Returns to API) | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
-| **Profile Insight Agent** | Read CreatorProfile | None (Returns to API) | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
-| **Collaboration Assistant** *(Deferred)* | Read Collaboration | None (Draft only) | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
-| **Workflow Coordinator** *(Deferred)* | Read Event state | Propose State change | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
+| **Campaign Brief Agent** | None (context provided by API) | None (Returns to API) | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
+| **Creator Matching Agent** | None (context provided by API) | None (Returns to API) | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
+| **Trust Analysis Agent** | None (context provided by API) | None (Returns to API) | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
+| **Profile Insight Agent** | None (context provided by API) | None (Returns to API) | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
+| **Collaboration Assistant** *(Deferred)* | None (context provided by API) | None (Draft only) | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
+| **Workflow Coordinator** *(Deferred)* | None (context provided by API) | Propose State change | ❌ Prohibited | ❌ Prohibited | ❌ Prohibited |
+
+> All database reads are performed by backend TypeScript service code, which serializes the needed data into the LLM prompt context (see §4). Agents have no direct database access.
 
 ---
 
