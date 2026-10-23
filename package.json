@@ -1,0 +1,30 @@
+{
+  "name": "collabtrust-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-assisted marketplace connecting emerging creators with small and growing brands",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "build:api": "npm run build --workspace=@collabtrust/api",
+    "build:web": "npm run build --workspace=@collabtrust/web",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "db:generate": "npm run db:generate --workspace=@collabtrust/api",
+    "db:migrate": "npm run db:migrate --workspace=@collabtrust/api",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

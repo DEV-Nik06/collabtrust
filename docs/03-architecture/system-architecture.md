@@ -76,7 +76,7 @@ Both connect to a single **PostgreSQL database** and make outbound calls to an *
 
 | Property | Value |
 |---|---|
-| Runtime | Node.js 18+ |
+| Runtime | Node.js 20.x LTS |
 | Framework | Express.js with TypeScript |
 | API style | REST with JSON request/response bodies |
 | API documentation | OpenAPI / Swagger (proposal) |

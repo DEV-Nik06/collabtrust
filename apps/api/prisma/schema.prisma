@@ -1,0 +1,214 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  brand
+  creator
+}
+
+enum CampaignStatus {
+  draft
+  active
+  closed
+  completed
+}
+
+enum ApplicationStatus {
+  pending
+  accepted
+  declined
+}
+
+enum CollaborationStatus {
+  invited
+  accepted
+  in_progress
+  completed
+}
+
+enum TrustSeverity {
+  info
+  note
+  anomaly
+}
+
+model User {
+  id                  String               @id @default(uuid())
+  email               String               @unique
+  passwordHash        String
+  role                Role
+  tokenVersion        Int                  @default(0)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  brandProfile        BrandProfile?
+  creatorProfile      CreatorProfile?
+  campaigns           Campaign[]           @relation("BrandCampaigns")
+  collaborations      Collaboration[]      @relation("BrandCollaborations")
+  messages            Message[]            @relation("UserMessages")
+  passwordResetTokens PasswordResetToken[]
+
+  @@index([role])
+}
+
+model BrandProfile {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName     String
+  category        String
+  description     String?  @db.Text
+  website         String?
+  budgetRange     String?
+  goals           String?  @db.Text
+  profileComplete Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model CreatorProfile {
+  id                 String         @id @default(uuid())
+  userId             String         @unique
+  user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  displayName        String
+  niche              String
+  platforms          Json
+  audienceSize       Int?
+  contentStyle       String?        @db.Text
+  collaborationPrefs String?        @db.Text
+  bio                String?        @db.Text
+  profileComplete    Boolean        @default(false)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  matches            Match[]
+  applications       Application[]
+  collaborations     Collaboration[]
+  trustSignals       TrustSignal[]
+
+  @@index([niche])
+}
+
+model Campaign {
+  id             String         @id @default(uuid())
+  brandId        String
+  brand          User           @relation("BrandCampaigns", fields: [brandId], references: [id], onDelete: Cascade)
+  title          String
+  category       String
+  rawInput       String?        @db.Text
+  goals          String         @db.Text
+  targetAudience String         @db.Text
+  deliverables   String         @db.Text
+  timeline       String
+  budget         String
+  requirements   String         @db.Text
+  status         CampaignStatus @default(draft)
+  aiStructured   Boolean        @default(false)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  matches        Match[]
+  applications   Application[]
+  collaborations Collaboration[]
+
+  @@index([brandId])
+  @@index([status])
+  @@index([category])
+}
+
+model Match {
+  id               String         @id @default(uuid())
+  campaignId       String
+  campaign         Campaign       @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  creatorProfileId String
+  creatorProfile   CreatorProfile @relation(fields: [creatorProfileId], references: [id], onDelete: Cascade)
+  score            Float?
+  explanation      String         @db.Text
+  factors          Json?
+  criteriaHash     String
+  createdAt        DateTime       @default(now())
+
+  @@unique([campaignId, creatorProfileId])
+  @@index([campaignId])
+}
+
+model Application {
+  id               String            @id @default(uuid())
+  campaignId       String
+  campaign         Campaign          @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  creatorProfileId String
+  creatorProfile   CreatorProfile    @relation(fields: [creatorProfileId], references: [id], onDelete: Cascade)
+  pitchNote        String?           @db.Text
+  status           ApplicationStatus @default(pending)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  collaboration    Collaboration?
+
+  @@unique([campaignId, creatorProfileId])
+  @@index([campaignId])
+  @@index([creatorProfileId])
+}
+
+model Collaboration {
+  id               String              @id @default(uuid())
+  campaignId       String
+  campaign         Campaign            @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  brandId          String
+  brand            User                @relation("BrandCollaborations", fields: [brandId], references: [id], onDelete: Cascade)
+  creatorProfileId String
+  creatorProfile   CreatorProfile      @relation(fields: [creatorProfileId], references: [id], onDelete: Cascade)
+  applicationId    String?             @unique
+  application      Application?        @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+  status           CollaborationStatus @default(invited)
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  messages         Message[]
+
+  @@index([campaignId])
+  @@index([creatorProfileId])
+}
+
+model Message {
+  id              String        @id @default(uuid())
+  collaborationId String
+  collaboration   Collaboration @relation(fields: [collaborationId], references: [id], onDelete: Cascade)
+  senderId        String
+  sender          User          @relation("UserMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  content         String        @db.Text
+  createdAt       DateTime      @default(now())
+
+  @@index([collaborationId])
+}
+
+model TrustSignal {
+  id               String         @id @default(uuid())
+  creatorProfileId String
+  creatorProfile   CreatorProfile @relation(fields: [creatorProfileId], references: [id], onDelete: Cascade)
+  signalType       String
+  signalValue      String         @db.Text
+  severity         TrustSeverity  @default(info)
+  metadata         Json?
+  generatedAt      DateTime       @default(now())
+
+  @@index([creatorProfileId])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+}

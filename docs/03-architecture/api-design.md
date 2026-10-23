@@ -12,7 +12,9 @@
 The CollabTrust backend exposes an HTTP REST API under base path `/api/v1`. All request payloads and response bodies use `application/json` with standard UTF-8 encoding.
 
 ### Core Design Rules
-* **Authentication:** Authenticated endpoints require a valid Bearer token in the `Authorization: Bearer <token>` header or an authenticated secure session cookie (see ADR-003).
+* **Authentication:** Authenticated endpoints require a valid short-lived Bearer token in the `Authorization: Bearer <token>` header (15-minute TTL per `NFR-010`, `ADR-003`). User sessions are maintained via a long-lived 7-day refresh token transmitted as an `httpOnly`, `Secure` (in production), `SameSite=Lax` cookie (`collabtrust_refresh_token`) scoped strictly to `/api/v1/auth`.
+* **Safe Local Development:** When running locally (`NODE_ENV=development`) over plain HTTP (`http://localhost`), the `Secure` flag on authentication cookies is disabled (`secure: false`) to avoid browser cookie rejection during local development and testing, while retaining `httpOnly` and `SameSite=Lax` protections. In production, `secure: true` is strictly enforced.
+* **CSRF Protection:** State-changing requests (`POST`, `PUT`, `DELETE`) rely on strict JSON content-type enforcement (`Content-Type: application/json`), CORS origin locking (`CORS_ORIGIN`), and `SameSite=Lax` cookie boundaries.
 * **Role-Based Access Control:** Routes enforce role permissions (`brand`, `creator`, or authenticated user).
 * **AI Invocation Endpoints:** AI actions are executed via synchronous or polled POST endpoints, returning structured JSON adhering to strict Zod/TypeScript schemas.
 * **Idempotency & Status Codes:** Standard HTTP status codes are strictly respected (200, 201, 400, 401, 403, 404, 409, 500).
@@ -60,6 +62,7 @@ All error responses return a uniform JSON format (canonical envelope, per NFR-01
   }
   ```
 * **Response (201 Created):**
+  Sets `collabtrust_refresh_token` in an `httpOnly`, `Secure` (in production), `SameSite=Lax` cookie (`Path=/api/v1/auth; Max-Age=604800` [7 days]).
   ```json
   {
     "user": {
@@ -68,13 +71,13 @@ All error responses return a uniform JSON format (canonical envelope, per NFR-01
       "role": "brand",
       "createdAt": "2026-10-12T10:00:00Z"
     },
-    "token": "jwt.signed.token"
+    "token": "jwt.access.token"
   }
   ```
 
 #### `POST /api/v1/auth/login`
 * **Access:** Public
-* **Purpose:** Authenticate and obtain session token.
+* **Purpose:** Authenticate and obtain session tokens.
 * **Request:**
   ```json
   {
@@ -83,6 +86,7 @@ All error responses return a uniform JSON format (canonical envelope, per NFR-01
   }
   ```
 * **Response (200 OK):**
+  Sets `collabtrust_refresh_token` in an `httpOnly`, `Secure` (in production), `SameSite=Lax` cookie (`Path=/api/v1/auth; Max-Age=604800` [7 days]).
   ```json
   {
     "user": {
@@ -90,13 +94,28 @@ All error responses return a uniform JSON format (canonical envelope, per NFR-01
       "email": "priya@example.com",
       "role": "brand"
     },
-    "token": "jwt.signed.token"
+    "token": "jwt.access.token"
   }
   ```
 
+#### `POST /api/v1/auth/refresh`
+* **Access:** Public (requires valid refresh cookie or optional `Authorization: Bearer <refreshToken>` header for automated integration tests)
+* **Purpose:** Exchange a valid 7-day refresh token for a fresh 15-minute access token. Performs refresh token rotation (issues a new refresh token cookie) and checks user active status and `tokenVersion`.
+* **Request:** In browsers, the refresh token is automatically sent via the `collabtrust_refresh_token` cookie. Empty JSON body `{}` or optional `{"refreshToken": "token_string"}` for headless testing.
+* **Response (200 OK):**
+  Rotates `collabtrust_refresh_token` cookie with fresh 7-day expiration.
+  ```json
+  {
+    "token": "new.jwt.access.token"
+  }
+  ```
+* **Errors:**
+  * `401 Unauthorized`: Missing, expired, malformed, or revoked refresh token, or tokenVersion mismatch indicating credentials have changed.
+
 #### `POST /api/v1/auth/logout`
 * **Access:** Authenticated
-* **Purpose:** Invalidate session token.
+* **Purpose:** Invalidate session tokens.
+* **Action:** Increments `tokenVersion` on the User record in PostgreSQL (instantly invalidating outstanding access tokens on sensitive routes per ADR-003) and clears the `collabtrust_refresh_token` cookie (`Max-Age=0`).
 * **Response (200 OK):** `{"message": "Logged out successfully"}`
 
 #### `POST /api/v1/auth/forgot-password`

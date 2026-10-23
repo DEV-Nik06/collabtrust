@@ -86,7 +86,7 @@
 
 * **Application Rollback:** PaaS platforms maintain instant previous-deployment rollbacks accessible via dashboard or CLI.
 * **Database Rollback:** Prisma migrations are forward-only — there are no programmatic rollback scripts. To undo a breaking schema change, roll forward with a corrective migration. Restore from the pre-deploy snapshot only for catastrophic failures.
-* **Database Snapshots:** Managed PostgreSQL instances will be configured per [`ADR-005-deployment.md`](../03-architecture/ADR/ADR-005-deployment.md) with automated daily backups and a retention period of N days. Point-in-time recovery is optional and not yet approved. (No backups exist yet — no infrastructure has been provisioned.)
+* **Database Snapshots:** Managed PostgreSQL instances will be configured per [`ADR-005-deployment.md`](../03-architecture/ADR/ADR-005-deployment.md) with automated daily snapshots and a retention period of 7 days (per `NFR-022`). Continuous Point-in-Time Recovery (PITR) is explicitly deferred to post-MVP. Operational assumptions and verification requirements: The target RPO (< 24 hours) assumes daily automated snapshot execution; the target RTO (< 2 hours) is an unverified target that requires empirical restore drill testing on the chosen managed PostgreSQL provider (e.g., Railway/Render) before production deployment sign-off. (No backups or infrastructure currently exist.)
 
 ---
 

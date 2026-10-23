@@ -71,13 +71,13 @@
 │  │ surfaces signals and evidence, not fraud guarantees or           │  │
 │  │ definitive authenticity verdicts.                                │  │
 │  │                                                                  │  │
-│  │ [ View Full Profile ]                    [ Accept Collaboration ] │  │
+│  │ [ View Full Profile ]                          [ ⭐ Shortlist ] │  │
 │  └──────────────────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 > [!NOTE]
-> The primary action button uses the accept/select terminology defined in [`FEAT-041`](../../01-product/feature-requirements.md) (Brand Reviews and Selects Creators). Accepting initializes the collaboration in "Invited" status per [`FEAT-042`](../../01-product/feature-requirements.md); there is no separate "invite" action in MVP scope.
+> In accordance with the approved marketplace workflow, matched creator cards support discovery actions: viewing the creator profile and shortlisting candidates. Brands cannot directly invite or initialize collaborations from AI match suggestions; creators must submit an application before a brand can accept or decline them. Acceptance and decline actions are located exclusively within the Applications tab ([`/campaigns/:id/applications`](../../03-architecture/api-design.md#35-applications--collaboration-workflow)).
 
 ---
 
@@ -119,13 +119,14 @@
 │  Status: [1. Invited] ── [2. Accepted] ── [3. In Progress] ── [4. Done]│
 │                                                                        │
 │  ┌───────────────────────────┐  ┌───────────────────────────────────┐  │
-│  │ Deliverables Checklist    │  │ Collaboration Messages            │  │
-│  │                           │  │                                   │  │
-│  │ [✓] Product Received      │  │ Maya: Received the moisturizer!   │  │
-│  │ [ ] Draft Reel Submitted  │  │ Glow Co: Great, let us know when  │  │
-│  │ [ ] 2 Stories Published   │  │ you have the first draft ready.   │  │
-│  │                           │  │                                   │  │
-│  │ [ Submit Deliverable Link]│  │ [ Type your message...     ] [Send│  │
+│  │ Campaign Details Summary  │  │ Collaboration Messages            │  │
+│  │ (Deliverables Checklist is│  │                                   │  │
+│  │  DEFERRED POST-MVP; links │  │ Maya: Received the moisturizer!   │  │
+│  │  shared via messages)     │  │ Glow Co: Great, let us know when  │  │
+│  │                           │  │ you have the first draft ready.   │  │
+│  │ Deliverables:             │  │ Maya: Draft posted: drive.link/...│  │
+│  │ • 1 Reel (30-60s)         │  │                                   │  │
+│  │ • 2 Stories with link     │  │ [ Type your message...     ] [Send│  │
 │  └───────────────────────────┘  └───────────────────────────────────┘  │
 │                                                                        │
 │  [ Confirm All Deliverables Completed ]                                │
@@ -133,7 +134,7 @@
 ```
 
 > [!NOTE]
-> **FEAT coverage:** The status stepper maps to [`FEAT-042`](../../01-product/feature-requirements.md) (Collaboration Status Tracking, MUST-HAVE), the message pane to [`FEAT-043`](../../01-product/feature-requirements.md) (Basic Messaging, SHOULD-HAVE), and "Confirm All Deliverables Completed" to [`FEAT-044`](../../01-product/feature-requirements.md) (Collaboration Completion, MUST-HAVE). The **Deliverables Checklist** and **"Submit Deliverable Link"** controls are **Deferred (post-MVP) — not in MVP scope**: no corresponding FEAT exists, and the collaboration checklist is NICE-TO-HAVE/deferred per [`mvp-scope.md` §3.5](../../01-product/mvp-scope.md).
+> **FEAT coverage:** The status stepper maps to [`FEAT-042`](../../01-product/feature-requirements.md) (Collaboration Status Tracking, MUST-HAVE), the message pane to [`FEAT-043`](../../01-product/feature-requirements.md) (Basic Messaging, SHOULD-HAVE), and "Confirm All Deliverables Completed" to [`FEAT-044`](../../01-product/feature-requirements.md) (Collaboration Completion, MUST-HAVE). Interactive checklist checkboxes and external link submission forms are **explicitly deferred post-MVP**: deliverable confirmation for MVP is coordinated directly through the message thread and finalized via the mutual completion action.
 
 ---
 

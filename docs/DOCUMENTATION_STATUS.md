@@ -1,14 +1,14 @@
 # CollabTrust — Master Documentation Status & Review Guide
 
-> **Status:** Complete Baseline (Ready for Human Review) — individual files carry per-file `Draft` statuses until review sign-off  
-> **Date:** 2026-10-12  
+> **Status:** Audited Baseline (Audited & Corrected per Approved Product/Technical Decisions)  
+> **Date:** 2026-10-22  
 > **Source of truth:** [`PROJECT_CONTEXT.md`](../PROJECT_CONTEXT.md)  
 
 ---
 
 ## 1. Executive Summary
 
-In adherence to the documentation-first engineering principle, this document records the completion of the foundational documentation set for **CollabTrust**.
+In adherence to the documentation-first engineering principle, this document records the completion of the foundational documentation set for **CollabTrust**, following a comprehensive documentation quality audit and the application of approved product and architectural decisions.
 
 All deliverable phases of the documentation roadmap (`PROJECT_CONTEXT.md` §9, **Phases 2–7: Product Definition through Testing & Deployment**) and the centralized **Knowledge Base** are drafted, cross-referenced, and internally aligned. Zero application source code or database migrations have been implemented, preserving the repository's documentation-first baseline.
 
@@ -40,7 +40,7 @@ All deliverable phases of the documentation roadmap (`PROJECT_CONTEXT.md` §9, *
 
 ### Phase 4 — Architecture (`docs/03-architecture/`)
 * [`system-architecture.md`](./03-architecture/system-architecture.md) — Monolithic layered architecture and component responsibilities.
-* [`database-design.md`](./03-architecture/database-design.md) — PostgreSQL 15 schema (9 entities) with indexes and relationships.
+* [`database-design.md`](./03-architecture/database-design.md) — PostgreSQL 15 schema (10 entities) with indexes and relationships.
 * [`api-design.md`](./03-architecture/api-design.md) — RESTful API endpoint catalog under `/api/v1` with JSON payloads.
 * [`security-design.md`](./03-architecture/security-design.md) — Threat model, RBAC access matrix, bcrypt hashing, and injection defenses.
 * Architecture Decision Records:
@@ -87,9 +87,10 @@ All deliverable phases of the documentation roadmap (`PROJECT_CONTEXT.md` §9, *
 
 ## 3. Consistency & Guardrail Verification
 
-1. **Human-in-the-Loop Decisions:** Verified across all documents (`product-vision.md`, `SRS.md`, `functional-requirements.md`, `safety-guardrails.md`, `ux-flows.md`). The AI never performs autonomous campaign publishing, creator invitations, or payments.
+1. **Human-in-the-Loop Decisions:** Verified across all documents (`product-vision.md`, `SRS.md`, `functional-requirements.md`, `safety-guardrails.md`, `ux-flows.md`, `wireframes/README.md`). The AI never performs autonomous campaign publishing, creator invitations, or payments. Creators must apply before brands accept/decline collaborations; direct brand invitation shortcuts are explicitly excluded from the MVP.
 2. **Evidence Over Claims (Trust Analysis):** Verified across all documents (`problem-definition.md`, `feature-requirements.md`, `agent-specifications.md`, `prompt-specifications.md`, `safety-guardrails.md`). All trust signal outputs are framed as observational evidence, prohibiting definitive fraud assertions ("fake", "guaranteed authentic"). The mandatory disclaimer is universally required.
-3. **Traceability:** Stable IDs (`FEAT-XXX`, `FR-XXX`, `NFR-XXX`, `US-XXX`, `AC-XXX`) cleanly interconnect product features, engineering requirements, user stories, and test suites.
+3. **Traceability & Test Mapping:** Stable IDs (`FEAT-XXX`, `FR-XXX`, `NFR-XXX`, `US-XXX`, `AC-XXX`) cleanly interconnect product features, engineering requirements, user stories, and test suites. 100% of canonical acceptance criteria (`AC-001.1`–`AC-052.2`) are mapped to concrete planned test cases in [`test-cases.md`](./06-testing/test-cases.md).
+4. **Documentation Quality Audit Completed:** Findings AUD-01 through AUD-11 have been resolved across the specification set in accordance with approved architectural decisions (refresh token lifecycle, application `pitchNote` schema alignment, 7-day snapshot retention, and runtime version alignment to Node.js 20.x LTS).
 
 ---
 
@@ -100,7 +101,7 @@ All deliverable phases of the documentation roadmap (`PROJECT_CONTEXT.md` §9, *
 | 1 | Narrow launch niche | Open | Product / Marketing | Crucial for marketplace cold start; select during user validation. |
 | 2 | LLM Provider selection | Proposed | Architecture / AI | Proposed Anthropic / OpenAI / Gemini; benchmark latency and token costs. |
 | 3 | Cloud hosting target | Proposed | Operations | PaaS (Railway/Render) proposed in ADR-005; confirm account setup. |
-| 4 | Token cookie vs. header | Proposed | Security | ADR-003 proposes httpOnly cookies for web, Bearer headers for API tests. |
+| 4 | Backup RTO / RPO verification | Open / Unverified | Operations | Daily snapshots provide 24h RPO; target RTO (< 2h) requires empirical restore drill testing on provider before production sign-off. Continuous PITR deferred post-MVP. |
 | 5 | Unvalidated user assumptions | Flagged | Product | Documented in `problem-definition.md §11`; validate via user interviews. |
 
 ---

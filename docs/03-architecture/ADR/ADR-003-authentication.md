@@ -20,7 +20,7 @@ We propose **JSON Web Tokens (JWT) signed via HMAC-SHA256 (`HS256`)**, issued up
 ### Token model (amended 2026-10-20)
 
 * **Access token:** 15-minute TTL (`JWT_EXPIRY`), carries a `tokenVersion` claim.
-* **Refresh token:** 7-day TTL (`JWT_REFRESH_EXPIRY`), used to obtain new access tokens.
+* **Refresh token:** 7-day TTL (`JWT_REFRESH_EXPIRY`), transmitted in an `httpOnly`, `Secure` (production), `SameSite=Lax` cookie (`collabtrust_refresh_token`), used to obtain new access tokens via `POST /api/v1/auth/refresh` with token rotation. In local development over HTTP, `Secure` is omitted while preserving `httpOnly` and `SameSite=Lax`.
 * **Revocation:** the user record stores a `tokenVersion` counter; logout and password change increment it. Sensitive routes (password change, account deletion, campaign publication, application acceptance) verify the claim server-side, rejecting stale tokens immediately — satisfying FR-005 / NFR-016 (MUST, immediate revocation) without a per-request denylist.
 
 > This amendment resolves the earlier conflict where this ADR declined instant revocation while FR-005 / NFR-016 required it.

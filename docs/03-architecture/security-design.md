@@ -25,20 +25,25 @@ CollabTrust is an AI-assisted two-sided marketplace managing brand campaign stra
 * **Storage:** Raw passwords are never logged, cached, or persisted in unhashed form.
 
 ### 2.2 Token-Based Authentication (ADR-003)
-* **Token Type:** JSON Web Tokens (JWT) signed via HMAC-SHA256 (`HS256`) using a cryptographically secure 256-bit secret stored in environment variables.
-* **Token Payload:**
+* **Token Type:** JSON Web Tokens (JWT) signed via HMAC-SHA256 (`HS256`) using a cryptographically secure 256-bit secret stored in environment variables (`JWT_SECRET`).
+* **Access Token Payload:**
   ```json
   {
     "sub": "user-uuid",
     "email": "user@example.com",
     "role": "brand", // "brand" | "creator"
+    "tokenVersion": 0,
     "iat": 1728730800,
     "exp": 1728817200
   }
   ```
-* **Expiration:** Access tokens are short-lived (**15 minutes**, `JWT_EXPIRY`) and are transparently renewed via a **7-day refresh token** (`JWT_REFRESH_EXPIRY`), per NFR-010.
-* **Revocation (ADR-003 amendment):** Access tokens carry a `tokenVersion` claim checked server-side on sensitive routes (password change, account deletion, publication/acceptance decisions). Logout and password change increment the stored `tokenVersion`, immediately invalidating all outstanding access tokens; refresh tokens are revoked on password change. Combined with the 15-minute TTL, this satisfies the immediate-revocation MUST in FR-005 / NFR-016 without a per-request blocklist.
-* **Delivery:** Delivered via `httpOnly`, `Secure`, `SameSite=Lax` cookies to mitigate Cross-Site Scripting (XSS) token extraction. Alternatively supported via `Authorization: Bearer <token>` header for headless API testing.
+* **Expiration & Lifecycle:**
+  * **Access Token:** Short-lived (**15 minutes**, `JWT_EXPIRY`), transmitted in API request headers (`Authorization: Bearer <token>`) or returned in response bodies for client storage.
+  * **Refresh Token:** Long-lived (**7 days**, `JWT_REFRESH_EXPIRY`), issued upon registration and login. Transmitted as an `httpOnly`, `Secure` (in production), `SameSite=Lax` cookie (`collabtrust_refresh_token`) scoped to `/api/v1/auth`.
+  * **Token Refresh (`POST /api/v1/auth/refresh`):** Exchanges a valid refresh token cookie for a new 15-minute access token and rotates the refresh token. Validates that the user's current database `tokenVersion` matches the token claim.
+  * **Safe Local Development:** When `NODE_ENV=development` and connections use plain HTTP (`http://localhost`), the cookie `Secure` flag is set to `false` to permit local testing while retaining `httpOnly` and `SameSite=Lax` protections. In production, `Secure` is strictly enforced.
+* **Revocation (ADR-003 amendment):** Access tokens carry a `tokenVersion` claim checked server-side on sensitive routes (password change, account deletion, publication/acceptance decisions). Logout and password change increment the stored `tokenVersion`, immediately invalidating all outstanding access tokens; refresh tokens are revoked on logout and password change. Combined with the 15-minute TTL, this satisfies the immediate-revocation MUST in FR-005 / NFR-016 without a per-request blocklist.
+* **Delivery:** Refresh tokens are delivered via `httpOnly`, `Secure`, `SameSite=Lax` cookies to eliminate client-side token theft via XSS. Alternatively supported via explicit authorization headers for automated API tests.
 
 ---
 

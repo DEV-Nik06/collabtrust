@@ -149,7 +149,7 @@ A creator's application to a campaign.
 | id | UUID | PK | |
 | campaignId | UUID | FK → Campaign.id, NOT NULL | |
 | creatorProfileId | UUID | FK → CreatorProfile.id, NOT NULL | |
-| message | TEXT | | Optional application message |
+| pitchNote | TEXT | | Optional application pitch note (FR-060, AC-040.1) |
 | status | ENUM('pending','accepted','declined') | NOT NULL, DEFAULT 'pending' | |
 | createdAt | TIMESTAMP | NOT NULL | |
 | updatedAt | TIMESTAMP | NOT NULL | |

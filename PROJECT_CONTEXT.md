@@ -292,11 +292,21 @@ AI architecture, agent specifications, prompt specifications, workflow specifica
 Design system, UX flows, wireframes.
 
 ### Phase 7 — Testing & Deployment
-**Status: COMPLETE (documentation)**
+**Status: COMPLETE (documentation & test catalog)**
 
-Test strategy, test plan, test cases, CI/CD blueprint, deployment guide, environment configuration, monitoring & logging design.
+Test strategy, test plan, itemized test cases for all 65 canonical acceptance criteria, CI/CD blueprint, deployment guide, environment configuration, monitoring & logging design.
 
-> All phases above are documentation-complete; **no application code, CI workflows, or infrastructure exist yet.** Implementation of the MVP begins after human review of this baseline (see §16).
+### Phase 8 — MVP Implementation
+**Status: IN PROGRESS (Scaffolding Complete)**
+
+Completed:
+- Monorepo configured with npm workspaces (`apps/web`, `apps/api`, `packages/shared`, `packages/ai`, `packages/config`)
+- Strict TypeScript configuration across workspaces (`NFR-050`)
+- `@collabtrust/shared`: Core types, constants, prohibited terms, and Zod validation schemas
+- `@collabtrust/ai`: Prompt builders, XML sanitizers, and schema validators
+- `@collabtrust/api`: Express application, CORS, cookie-parser, request correlation IDs (`NFR-017`), RBAC auth middleware, and complete Prisma schema with all 10 audited entities
+- `@collabtrust/web`: Vite + React 18 + Tailwind CSS with design tokens and wireframe-aligned UI components
+- Clean typecheck and build verified across all workspaces
 
 ## 11. Phase 2 Working Sequence
 

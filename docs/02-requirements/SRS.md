@@ -121,7 +121,7 @@ The system specifies **52 Non-Functional Requirements** detailed in [`non-functi
 
 ### 4.2 Hardware & Network Interfaces
 * Standard TCP/IP over HTTPS (Port 443).
-* Local development environment requires Node.js 18+ and PostgreSQL connection string.
+* Local development environment requires Node.js 20.x LTS and PostgreSQL connection string.
 
 ### 4.3 Software Interfaces
 * **Database:** PostgreSQL accessed via Prisma Client ORM over secure connection pool.

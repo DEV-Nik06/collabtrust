@@ -105,7 +105,7 @@ These metrics indicate whether the marketplace has sufficient activity and parti
 
 | ID | Metric | Description | Target | Measurement Method |
 |---|---|---|---|---|
-| MH-1 | Active campaigns | Number of campaigns in "open" or "in-progress" status at any given time | TBD | Database query on campaign status |
+| MH-1 | Active campaigns | Number of campaigns in "active" status at any given time | TBD | Database query on campaign status |
 | MH-2 | Creator sign-ups | Total number of registered creator accounts | TBD | User registration count (creator role) |
 | MH-3 | Brand sign-ups | Total number of registered brand accounts | TBD | User registration count (brand role) |
 | MH-4 | Match rate | Percentage of campaigns that receive at least one AI-generated creator match | Proposed: ≥ 80% | (Campaigns with ≥ 1 match) / (Total campaigns created) |
@@ -146,10 +146,10 @@ These metrics capture subjective user sentiment about the platform.
 
 | ID | Metric | Description | Target | Measurement Method |
 |---|---|---|---|---|
-| US-1 | Brand satisfaction score | Brand-side satisfaction with the overall matching and collaboration experience | TBD | Post-collaboration survey or in-app rating (1–5 scale) |
-| US-2 | Creator satisfaction score | Creator-side satisfaction with opportunity discovery and collaboration experience | TBD | Post-collaboration survey or in-app rating (1–5 scale) |
-| US-3 | Net Promoter Score (NPS) | Willingness of users to recommend CollabTrust to peers | TBD | Standard NPS survey question |
-| US-4 | Qualitative feedback themes | Recurring themes in open-ended user feedback | N/A (qualitative) | Thematic analysis of feedback collected via in-app forms or interviews |
+| SAT-1 | Brand satisfaction score | Brand-side satisfaction with the overall matching and collaboration experience | TBD | Post-collaboration survey or in-app rating (1–5 scale) |
+| SAT-2 | Creator satisfaction score | Creator-side satisfaction with opportunity discovery and collaboration experience | TBD | Post-collaboration survey or in-app rating (1–5 scale) |
+| SAT-3 | Net Promoter Score (NPS) | Willingness of users to recommend CollabTrust to peers | TBD | Standard NPS survey question |
+| SAT-4 | Qualitative feedback themes | Recurring themes in open-ended user feedback | N/A (qualitative) | Thematic analysis of feedback collected via in-app forms or interviews |
 
 > [!NOTE]
 > During early MVP testing, satisfaction data will likely come from direct user interviews or small feedback forms rather than statistically significant surveys. This is expected and acceptable for validation purposes.
