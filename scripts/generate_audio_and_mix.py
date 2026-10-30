@@ -99,39 +99,38 @@ def mix_and_produce_final_video():
     if not os.path.exists(bg_music):
         raise FileNotFoundError(f"Background music not found: {bg_music}")
 
-    # Build ffmpeg filter_complex
-    # 1. Delay each voiceover segment by delay_ms
-    # 2. amix all voiceover segments together
-    # 3. duck and loop/fade background music
-    # 4. amix voiceover + music
-    
-    inputs = ["-y", "-i", raw_video]
+    # Build ffmpeg command:
+    # 0: raw_video
+    # 1: bg_music (trimmed to start at 3s for immediate upbeat melody)
+    # 2..10: voiceover segments
+    inputs = [
+        "-y",
+        "-i", raw_video,
+        "-ss", "3", "-i", bg_music,
+    ]
     for scene in SCENES:
         inputs.extend(["-i", scene["file"]])
-    inputs.extend(["-i", bg_music])
 
-    bg_index = len(SCENES) + 1  # 0 is raw_video, 1..N are scenes, N+1 is bg_music
-    
     filter_parts = []
     amix_vo_inputs = []
 
-    for idx, scene in enumerate(SCENES, 1):
+    # Voiceover segment delay filters
+    for idx, scene in enumerate(SCENES, 2):  # inputs 2..10
         delay = scene["delay_ms"]
         filter_parts.append(f"[{idx}:a]adelay={delay}|{delay}[v{idx}]")
         amix_vo_inputs.append(f"[v{idx}]")
 
-    # Mix voiceover tracks
+    # Combine all voiceover segments
     num_scenes = len(SCENES)
     filter_parts.append(f"{''.join(amix_vo_inputs)}amix=inputs={num_scenes}:dropout_transition=0:normalize=0[vo_mix]")
-    
-    # Process voiceover: slight compression/loudness boost for clarity
-    filter_parts.append("[vo_mix]volume=1.12[vo_clean]")
-    
-    # Process background music: duck to 12% volume, fade in 2s, fade out last 3s (106s to 109s)
-    filter_parts.append(f"[{bg_index}:a]volume=0.13,afade=t=in:ss=0:d=2.5,afade=t=out:st=106:d=3.2[bg_clean]")
-    
-    # Mix Voiceover + BG Music
-    filter_parts.append("[vo_clean][bg_clean]amix=inputs=2:duration=first:dropout_transition=0:normalize=0[final_audio]")
+    filter_parts.append("[vo_mix]volume=1.22[vo_clean]")
+
+    # Background music: clearly audible at 22% volume, instant 0.5s fade-in, smooth 3.2s fade-out at end
+    filter_parts.append("[1:a]volume=0.22,afade=t=in:ss=0:d=0.5,afade=t=out:st=106:d=3.2[bg_clean]")
+
+    # Mix bg_music (continuous base) with voiceover (cleanly overlaid)
+    # Using bg_clean as first input guarantees continuous background music without dropouts during dialogue pauses
+    filter_parts.append("[bg_clean][vo_clean]amix=inputs=2:duration=first:dropout_transition=0:normalize=0[final_audio]")
 
     filter_complex = "; ".join(filter_parts)
 
@@ -148,13 +147,13 @@ def mix_and_produce_final_video():
         final_video
     ]
 
-    print("\nRunning FFmpeg mastering pipeline...")
+    print("\nRunning FFmpeg mastering pipeline with continuous background music...")
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
         print("FFmpeg STDERR:", result.stderr)
         raise RuntimeError("FFmpeg mixing failed!")
 
-    print(f"\nSUCCESS! Mastered final video created at:\n{final_video}")
+    print(f"\nSUCCESS! Mastered final video with clear background music created at:\n{final_video}")
 
     # Inspect final video
     probe = subprocess.run(
