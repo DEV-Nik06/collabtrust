@@ -9,6 +9,8 @@ export function wrapXml(tag: string, content: string): string {
   return `<${tag}>\n${sanitized.trim()}\n</${tag}>`;
 }
 
+export const wrapWithXmlTags = wrapXml;
+
 /**
  * Validates that generated text does not contain prohibited definitive fraud/authenticity claims.
  * Per docs/04-ai/safety-guardrails.md §2.

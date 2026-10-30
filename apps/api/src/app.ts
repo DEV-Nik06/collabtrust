@@ -8,6 +8,7 @@ import { campaignRouter } from './routes/campaign.routes.js';
 import { matchRouter } from './routes/match.routes.js';
 import { applicationRouter } from './routes/application.routes.js';
 import { collaborationRouter } from './routes/collaboration.routes.js';
+import { dashboardRouter } from './routes/dashboard.routes.js';
 import { errorHandler } from './middleware/error.middleware.js';
 
 export function createApp(): Express {
@@ -39,6 +40,7 @@ export function createApp(): Express {
   app.use('/api/v1', matchRouter);
   app.use('/api/v1', applicationRouter);
   app.use('/api/v1', collaborationRouter);
+  app.use('/api/v1', dashboardRouter);
 
   // Global error handler
   app.use(errorHandler);

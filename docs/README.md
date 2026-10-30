@@ -11,6 +11,7 @@ This directory contains the comprehensive product, technical, AI, design, testin
 
 ### [01 — Product](./01-product/)
 * [`product-vision.md`](./01-product/product-vision.md) — Mission, vision, core principles, and boundaries.
+* [`autonomous-agency-vision.md`](./01-product/autonomous-agency-vision.md) — Strategic roadmap & multi-agent architecture for the Autonomous AI Marketing Agency.
 * [`problem-definition.md`](./01-product/problem-definition.md) — Problem statements, root causes, and assumptions.
 * [`target-users.md`](./01-product/target-users.md) — Two-sided marketplace segments and initial focus.
 * [`personas.md`](./01-product/personas.md) — Illustrative user personas (Priya, Daniel, Maya, Jordan).
